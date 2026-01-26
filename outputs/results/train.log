@@ -1,0 +1,65 @@
+[01:15:16] INFO - Epoch 1/30 | train loss=3.8113 acc=0.3056 | val loss=2.8426 acc=0.3792
+[11:01:47] INFO - Epoch 1/30 | train loss=6.1322 acc=0.1443 | val loss=5.0949 acc=0.2490
+[11:04:38] INFO - Epoch 2/30 | train loss=4.1188 acc=0.3794 | val loss=4.2063 acc=0.3319
+[11:07:27] INFO - Epoch 3/30 | train loss=3.1604 acc=0.5089 | val loss=3.7263 acc=0.3790
+[11:10:15] INFO - Epoch 4/30 | train loss=2.5551 acc=0.5993 | val loss=3.4297 acc=0.4112
+[11:13:04] INFO - Epoch 5/30 | train loss=2.1260 acc=0.6710 | val loss=3.2272 acc=0.4281
+[11:15:53] INFO - Epoch 6/30 | train loss=1.7996 acc=0.7257 | val loss=3.0931 acc=0.4441
+[12:03:44] INFO - Epoch 1/30 | train loss=7.8214 acc=0.07% | val loss=7.8040 acc=0.11% | time=199.91s
+[12:06:36] INFO - Epoch 2/30 | train loss=7.7955 acc=0.14% | val loss=7.7883 acc=0.21% | time=171.27s
+[12:10:20] INFO - Epoch 1/30 | train loss=72.8436 acc=0.49% | val loss=68.1176 acc=0.64% | time=171.11s
+[12:13:09] INFO - Epoch 2/30 | train loss=68.2543 acc=0.74% | val loss=68.4086 acc=0.61% | time=168.94s
+[12:17:49] INFO - Epoch 1/30 | train loss=7.8208 acc=0.08% | val loss=7.8027 acc=0.13% | time=200.45s
+[12:20:39] INFO - Epoch 2/30 | train loss=7.7940 acc=0.17% | val loss=7.7864 acc=0.21% | time=170.23s
+[12:23:29] INFO - Epoch 3/30 | train loss=7.7765 acc=0.23% | val loss=7.7706 acc=0.31% | time=169.93s
+[12:29:03] INFO - Epoch 1/30 | train loss=6.2929 acc=12.53% | val loss=5.3342 acc=21.72% | time=202.22s
+[12:31:55] INFO - Epoch 2/30 | train loss=4.6866 acc=31.35% | val loss=4.7938 acc=27.02% | time=171.71s
+[12:34:46] INFO - Epoch 3/30 | train loss=4.0124 acc=37.81% | val loss=4.1975 acc=32.26% | time=171.52s
+[12:37:38] INFO - Epoch 4/30 | train loss=3.3243 acc=46.54% | val loss=3.8388 acc=35.54% | time=171.13s
+[12:40:29] INFO - Epoch 5/30 | train loss=2.8527 acc=53.34% | val loss=3.5823 acc=37.97% | time=170.94s
+[12:43:21] INFO - Epoch 6/30 | train loss=2.5018 acc=58.72% | val loss=3.4072 acc=39.95% | time=171.87s
+[15:06:34] INFO - Epoch 1/30 | train loss=6.3010 acc=11.96% | val loss=5.3316 acc=20.87% | time=212.82s
+[15:11:05] INFO - Epoch 1/30 | train loss=6.3010 acc=11.96% | val loss=5.3316 acc=20.87% | time=234.44s
+[15:14:07] INFO - Epoch 2/30 | train loss=4.6655 acc=32.45% | val loss=4.7971 acc=26.40% | time=180.75s
+[15:17:08] INFO - Epoch 3/30 | train loss=3.9887 acc=39.05% | val loss=4.2085 acc=31.28% | time=181.07s
+[15:20:13] INFO - Epoch 4/30 | train loss=3.2950 acc=48.58% | val loss=3.8557 acc=34.54% | time=185.18s
+[15:23:32] INFO - Epoch 5/30 | train loss=2.8189 acc=55.85% | val loss=3.6002 acc=37.30% | time=198.27s
+[15:26:36] INFO - Epoch 6/30 | train loss=2.4658 acc=61.60% | val loss=3.4288 acc=38.93% | time=183.31s
+[15:29:31] INFO - Epoch 7/30 | train loss=2.1832 acc=66.26% | val loss=3.2934 acc=40.52% | time=175.22s
+[15:32:27] INFO - Epoch 8/30 | train loss=1.9573 acc=70.07% | val loss=3.1920 acc=41.52% | time=175.91s
+[15:36:11] INFO - Epoch 9/30 | train loss=1.7724 acc=73.26% | val loss=3.1067 acc=42.49% | time=223.13s
+[15:39:29] INFO - Epoch 10/30 | train loss=1.6096 acc=76.12% | val loss=3.0312 acc=43.22% | time=197.66s
+[15:42:24] INFO - Epoch 11/30 | train loss=1.4749 acc=78.40% | val loss=2.9884 acc=43.71% | time=174.50s
+[15:45:16] INFO - Epoch 12/30 | train loss=1.3532 acc=80.52% | val loss=2.9389 acc=44.08% | time=171.78s
+[15:52:44] INFO - Starting training...
+[15:54:11] INFO - Starting training...
+[15:58:57] INFO - Epoch 1/30 | train loss=inf acc=11.97% | val loss=5.5420 acc=20.87% | time=285.88s
+[16:01:59] INFO - Epoch 2/30 | train loss=4.7928 acc=32.45% | val loss=4.9843 acc=26.41% | time=181.68s
+[16:05:10] INFO - Epoch 3/30 | train loss=4.0711 acc=39.05% | val loss=4.3701 acc=31.29% | time=191.10s
+[16:08:54] INFO - Epoch 4/30 | train loss=3.3230 acc=48.57% | val loss=4.0006 acc=34.53% | time=223.48s
+[16:11:57] INFO - Epoch 5/30 | train loss=2.8081 acc=55.84% | val loss=3.7340 acc=37.31% | time=182.09s
+[16:15:12] INFO - Epoch 6/30 | train loss=2.4283 acc=61.59% | val loss=3.5575 acc=38.93% | time=194.66s
+[16:18:09] INFO - Epoch 7/30 | train loss=2.1244 acc=66.24% | val loss=3.4198 acc=40.53% | time=177.09s
+[16:21:49] INFO - Epoch 8/30 | train loss=1.8835 acc=70.05% | val loss=3.3158 acc=41.51% | time=219.60s
+[16:24:54] INFO - Epoch 9/30 | train loss=1.6867 acc=73.25% | val loss=3.2291 acc=42.47% | time=184.35s
+[16:28:22] INFO - Epoch 10/30 | train loss=1.5150 acc=76.13% | val loss=3.1551 acc=43.20% | time=208.47s
+[16:31:17] INFO - Epoch 11/30 | train loss=1.3730 acc=78.39% | val loss=3.1141 acc=43.71% | time=174.26s
+[16:34:12] INFO - Epoch 12/30 | train loss=1.2461 acc=80.51% | val loss=3.0657 acc=44.09% | time=174.33s
+[16:37:07] INFO - Epoch 13/30 | train loss=1.1421 acc=82.17% | val loss=3.0342 acc=44.38% | time=174.84s
+[16:40:02] INFO - Epoch 14/30 | train loss=1.0479 acc=83.68% | val loss=3.0070 acc=44.93% | time=174.36s
+[16:42:56] INFO - Epoch 15/30 | train loss=0.9669 acc=84.95% | val loss=2.9901 acc=45.19% | time=174.07s
+[16:45:51] INFO - Epoch 16/30 | train loss=0.8928 acc=86.15% | val loss=2.9642 acc=45.41% | time=174.93s
+[16:48:46] INFO - Epoch 17/30 | train loss=0.8301 acc=87.12% | val loss=2.9651 acc=45.62% | time=174.06s
+[16:51:41] INFO - Epoch 18/30 | train loss=0.7729 acc=88.02% | val loss=2.9423 acc=45.73% | time=175.13s
+[16:54:36] INFO - Epoch 19/30 | train loss=0.7243 acc=88.77% | val loss=2.9316 acc=46.01% | time=174.98s
+[16:57:30] INFO - Epoch 20/30 | train loss=0.6745 acc=89.66% | val loss=2.9337 acc=45.94% | time=173.15s
+[17:00:22] INFO - Epoch 21/30 | train loss=0.6358 acc=90.09% | val loss=2.9355 acc=46.04% | time=172.43s
+[17:03:15] INFO - Epoch 22/30 | train loss=0.6085 acc=90.43% | val loss=2.9115 acc=46.53% | time=172.17s
+[17:06:08] INFO - Epoch 23/30 | train loss=0.5664 acc=91.11% | val loss=2.9286 acc=46.38% | time=172.91s
+[17:09:03] INFO - Epoch 24/30 | train loss=0.5377 acc=91.55% | val loss=2.9219 acc=46.65% | time=174.68s
+[17:11:58] INFO - Epoch 25/30 | train loss=0.5140 acc=91.86% | val loss=2.9239 acc=46.60% | time=175.05s
+[17:14:53] INFO - Epoch 26/30 | train loss=0.4878 acc=92.29% | val loss=2.9170 acc=46.82% | time=175.17s
+[17:17:48] INFO - Epoch 27/30 | train loss=0.4631 acc=92.62% | val loss=2.9256 acc=46.64% | time=173.99s
+[17:20:41] INFO - Epoch 28/30 | train loss=0.4452 acc=92.90% | val loss=2.9168 acc=46.97% | time=173.50s
+[17:23:35] INFO - Epoch 29/30 | train loss=0.4300 acc=93.07% | val loss=2.9391 acc=47.00% | time=173.37s
+[17:26:29] INFO - Epoch 30/30 | train loss=0.4077 acc=93.40% | val loss=2.9333 acc=46.96% | time=173.79s
