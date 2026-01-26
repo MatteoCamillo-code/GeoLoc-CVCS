@@ -26,6 +26,8 @@ class OSV_mini(Dataset):
         split="total",   # "train" | "val" | "total"
         scene="total",   # "urban" | "natural" | "total"
         label_maps=None,
+        coarse_label_idx: list[int] = [0],
+        
     ):
         self.image_root = image_root
         self.transform = transform
@@ -62,7 +64,7 @@ class OSV_mini(Dataset):
         self.labels = None
         self.label_maps = {} if label_maps is None else label_maps
 
-        label_cols = ["label_config_1", "label_config_2", "label_config_3"]
+        label_cols = [f"label_config_{idx + 1}" for idx in coarse_label_idx]
         label_arrays = []
 
         for col in label_cols:

@@ -16,12 +16,14 @@ def fit(cfg, model, train_loader, val_loader, optimizer, criterion, scaler, sche
     history = {"train_loss": [], "train_acc": [], "val_loss": [], "val_acc": []}
 
     ckpt_path = abs_path(cfg.output_dir, "checkpoints", cfg.model_name)
+    
+    logger.info("Starting training...")
 
     for epoch in range(cfg.max_epochs):
         start_time = time()
         
-        tr = train_one_epoch(model, train_loader, optimizer, criterion, scaler, cfg.device, amp=cfg.amp, label_idx=label_idx, use_tqdm=use_tqdm)
-        va = evaluate(model, val_loader, criterion, cfg.device, amp=cfg.amp, label_idx=label_idx, use_tqdm=use_tqdm)
+        tr = train_one_epoch(model, train_loader, optimizer, criterion, scaler, cfg.device, amp=cfg.amp, use_tqdm=use_tqdm)
+        va = evaluate(model, val_loader, criterion, cfg.device, amp=cfg.amp, use_tqdm=use_tqdm)
 
         epoch_time = time() - start_time
 
@@ -35,19 +37,19 @@ def fit(cfg, model, train_loader, val_loader, optimizer, criterion, scaler, sche
 
         logger.info(
             f"Epoch {epoch+1}/{cfg.max_epochs} | "
-            f"train loss={tr['loss']:.4f} acc={tr['acc']*100:.2f}% | "
-            f"val loss={va['loss']:.4f} acc={va['acc']*100:.2f}% | "
+            f"train loss={tr['loss']:.4f} acc={(tr['acc']*100):.2f}% | "
+            f"val loss={va['loss']:.4f} acc={(va['acc']*100):.2f}% | "
             f"time={epoch_time:.2f}s"
         )
 
         # save best
-        if va["loss"] <= es.best:
+        if va["acc"] >= es.best:
             save_checkpoint(
                 ckpt_path, model, optimizer, epoch,
-                extra={"cfg": asdict(cfg), "best_val_loss": va["loss"]}
+                extra={"cfg": asdict(cfg), "best_val_acc": va["acc"]}
             )
 
-        if es.step(va["loss"]):
+        if es.step(va["acc"]):
             logger.info("Early stopping.")
             break
 

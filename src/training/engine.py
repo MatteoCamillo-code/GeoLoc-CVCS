@@ -16,7 +16,6 @@ def train_one_epoch(
     scaler,
     device: torch.device,
     amp: bool = True,
-    label_idx: int = 0,
     use_tqdm: bool = True,
 ):
     model.train()
@@ -25,6 +24,9 @@ def train_one_epoch(
     n = 0
 
     it = _get_pbar(loader, desc="train", enable=use_tqdm)
+    
+    head_dims = torch.tensor(model.get_head_dims(), device=device, dtype=torch.float32)
+    head_dim_sum = head_dims.sum()
 
     for step, batch in enumerate(it):
         x, labels = _to_device(batch, device)
@@ -32,14 +34,19 @@ def train_one_epoch(
         optimizer.zero_grad(set_to_none=True)
 
         with torch.amp.autocast(device_type="cuda", dtype=torch.float16, enabled=amp):
-            logits = model(x)
-            loss = criterion(logits, labels[:, label_idx])
-
+            logits = model.get_coarse_level_logits(x)
+            loss_values = torch.stack([criterion(logit, labels[:, idx]) 
+                                for idx, logit in enumerate(logits)])
+            loss = loss_values @ head_dims / head_dim_sum
+            
         scaler.scale(loss).backward()
         scaler.step(optimizer)
         scaler.update()
         
-        acc = (logits.argmax(1) == labels[:, label_idx]).float().mean()
+        acc_values = torch.stack([(logit.argmax(1) == labels[:, idx]).float().mean() 
+                           for idx, logit in enumerate(logits)])
+        
+        acc = acc_values @ head_dims / head_dim_sum
 
         bs = x.size(0)
         total_loss += loss.detach() * bs              # tensor, stays on GPU
@@ -62,7 +69,6 @@ def evaluate(
     criterion,
     device: torch.device,
     amp: bool = True,
-    label_idx: int = 0,
     use_tqdm: bool = True,
 ):
     model.eval()
@@ -71,15 +77,23 @@ def evaluate(
     n = 0
 
     it = _get_pbar(loader, desc="val", enable=use_tqdm)
+    
+    head_dims = torch.tensor(model.get_head_dims(), device=device, dtype=torch.float32)
+    head_dim_sum = head_dims.sum()
 
     for step, batch in enumerate(it):
         x, labels = _to_device(batch, device)
 
         with torch.amp.autocast(device_type="cuda", dtype=torch.float16, enabled=amp):
-            logits = model(x)
-            loss = criterion(logits, labels[:, label_idx])
+            logits = model.get_coarse_level_logits(x)
+            loss_values = torch.stack([criterion(logit, labels[:, idx]) 
+                                for idx, logit in enumerate(logits)])
+            loss = loss_values @ head_dims / head_dim_sum
 
-        acc = (logits.argmax(1) == labels[:, label_idx]).float().mean()
+        acc_values = torch.stack([(logit.argmax(1) == labels[:, idx]).float().mean() 
+                           for idx, logit in enumerate(logits)])
+        
+        acc = acc_values @ head_dims / head_dim_sum
 
         bs = x.size(0)
         total_loss += loss.detach() * bs              # tensor, stays on GPU

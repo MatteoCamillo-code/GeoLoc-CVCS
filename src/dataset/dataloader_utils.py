@@ -15,7 +15,6 @@ def create_transforms(img_size=224, augment=True):
         train_transform = transforms.Compose([
             transforms.RandomResizedCrop(img_size, scale=(0.7, 1.0), ratio=(3/4, 4/3)),
             transforms.RandomHorizontalFlip(0.5),
-            transforms.ColorJitter(0.1, 0.1, 0.1, 0.05),
             transforms.RandomApply([transforms.RandomRotation(10)], p=0.2),
             transforms.ToTensor(),
         ])
@@ -45,6 +44,7 @@ def create_dataloaders(
     augment=True,
     prefetch_factor=4,
     persistent_workers=True,
+    coarse_label_idx: list[int] = [0],
 ):
     """
     Create train and validation DataLoaders with optional dataset subsetting.
@@ -95,6 +95,7 @@ def create_dataloaders(
         split="train",
         scene="total",
         label_maps=None,
+        coarse_label_idx=coarse_label_idx,
     )
 
     val_dataset = OSV_mini(
@@ -104,6 +105,7 @@ def create_dataloaders(
         split="val",
         scene="total",
         label_maps=train_dataset.label_maps,
+        coarse_label_idx=coarse_label_idx,
     )
 
     # Apply subsetting if requested
