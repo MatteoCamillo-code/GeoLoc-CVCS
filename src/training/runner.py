@@ -10,7 +10,7 @@ from utils.logging import get_logger
 from utils.paths import abs_path
 
 def fit(cfg, model, train_loader, val_loader, optimizer, criterion, scaler, scheduler=None, label_idx: int = 0, use_tqdm: bool = True):
-    logger = get_logger(log_file=str(abs_path(cfg.output_dir, "results", "train.log")))
+    logger = get_logger(log_file=str(abs_path(cfg.output_dir, "log", "train.log")))
 
     es = EarlyStopping(patience=cfg.patience)
     history = {"train_loss": [], "train_acc": [], "val_loss": [], "val_acc": []}
