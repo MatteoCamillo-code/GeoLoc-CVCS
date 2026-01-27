@@ -10,7 +10,7 @@ class TrainConfig:
     weight_decay: float = 1e-4
     scheduler_step_size: int = 5
     scheduler_gamma: float = 0.5
-    max_epochs: int = 1
+    max_epochs: int = 25
     patience: int = 5
     delta_patience: float = 1e-3
     amp: bool = True
