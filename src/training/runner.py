@@ -9,15 +9,16 @@ from utils.checkpointing import save_checkpoint
 from utils.logging import get_logger
 from utils.paths import abs_path
 
-def fit(cfg, model, train_loader, val_loader, optimizer, criterion, scaler, scheduler=None, label_idx: int = 0, use_tqdm: bool = True):
-    logger = get_logger(log_file=str(abs_path(cfg.output_dir, "logs", "train.log")))
+def fit(cfg, model, train_loader, val_loader, optimizer, criterion, scaler, scene, scheduler=None, label_idx: int = 0, use_tqdm: bool = True, logger=None):
+    if logger is None:
+        logger = get_logger(log_file=str(abs_path(cfg.output_dir, "logs", "train.log")))
 
     es = EarlyStopping(patience=cfg.patience, delta_patience=cfg.delta_patience)
     history = {"train_loss": [], "train_acc": [], "val_loss": [], "val_acc": []}
 
-    ckpt_path = abs_path(cfg.output_dir, "checkpoints", (cfg.model_name + f".pt"))
+    ckpt_path = abs_path(cfg.output_dir, "checkpoints", (cfg.model_name + scene + f".pt"))
     
-    logger.info(f"Starting training {cfg.model_name}...")
+    logger.info(f"Starting training {cfg.model_name} for scene {scene} ...")
 
     for epoch in range(cfg.max_epochs):
         start_time = time()
@@ -52,5 +53,6 @@ def fit(cfg, model, train_loader, val_loader, optimizer, criterion, scaler, sche
         if es.step(va["acc"]):
             logger.info("Early stopping.")
             break
-
+    
+    logger.info("Training completed.")
     return history

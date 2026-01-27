@@ -60,3 +60,9 @@
 [20:16:08] INFO - Epoch 28/30 | train loss=0.5283 acc=91.57% | val loss=2.7205 acc=48.01% | time=168.22s
 [20:18:57] INFO - Epoch 29/30 | train loss=0.5100 acc=91.84% | val loss=2.7339 acc=48.06% | time=168.23s
 [20:21:45] INFO - Epoch 30/30 | train loss=0.4835 acc=92.31% | val loss=2.7285 acc=48.07% | time=168.12s
+[18:29:11] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[18:30:37] INFO - Epoch 1/1 | train loss=6.7759 acc=2.87% | val loss=6.2849 acc=5.90% | time=85.81s
+[18:30:37] INFO - Training completed.
+[18:30:37] INFO - Starting training baseline_multi_head_ISN for scene natural ...
+[18:34:09] INFO - Epoch 1/1 | train loss=6.3311 acc=13.82% | val loss=5.3600 acc=23.07% | time=211.80s
+[18:34:09] INFO - Training completed.
