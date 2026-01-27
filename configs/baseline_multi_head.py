@@ -12,9 +12,10 @@ class TrainConfig:
     scheduler_gamma: float = 0.5
     max_epochs: int = 30
     patience: int = 5
+    delta_patience: float = 1e-3
     amp: bool = True
     device: str = "cuda"
-    model_name: str = "baseline_multi_head.pt"
+    model_name: str = "baseline_multi_head"
     use_tqdm: bool = True
     
     dropout: float = 0.0 

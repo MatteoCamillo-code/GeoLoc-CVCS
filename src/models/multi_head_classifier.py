@@ -31,7 +31,7 @@ class MultiHeadClassifier(nn.Module):
 
     def get_coarse_level_logits(self, x):
         logits = self.forward(x)
-        coarse_logits = [logits[idx] for idx in self.coarse_level_idx]
+        coarse_logits = [logits[idx] for idx in range(len(self.coarse_level_idx))]
         return coarse_logits
     
     def get_head_dims(self):

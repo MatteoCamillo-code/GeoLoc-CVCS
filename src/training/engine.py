@@ -24,9 +24,6 @@ def train_one_epoch(
     n = 0
 
     it = _get_pbar(loader, desc="train", enable=use_tqdm)
-    
-    head_dims = torch.tensor(model.get_head_dims(), device=device, dtype=torch.float32)
-    head_dim_sum = head_dims.sum()
 
     for step, batch in enumerate(it):
         x, labels = _to_device(batch, device)
@@ -35,18 +32,15 @@ def train_one_epoch(
 
         with torch.amp.autocast(device_type="cuda", dtype=torch.float16, enabled=amp):
             logits = model.get_coarse_level_logits(x)
-            loss_values = torch.stack([criterion(logit, labels[:, idx]) 
-                                for idx, logit in enumerate(logits)])
-            loss = loss_values @ head_dims / head_dim_sum
+            loss = torch.stack([criterion(logit, labels[:, idx]) 
+                                for idx, logit in enumerate(logits)]).mean()
             
         scaler.scale(loss).backward()
         scaler.step(optimizer)
         scaler.update()
         
-        acc_values = torch.stack([(logit.argmax(1) == labels[:, idx]).float().mean() 
-                           for idx, logit in enumerate(logits)])
-        
-        acc = acc_values @ head_dims / head_dim_sum
+        acc = torch.stack([(logit.argmax(1) == labels[:, idx]).float().mean() 
+                           for idx, logit in enumerate(logits)]).mean()
 
         bs = x.size(0)
         total_loss += loss.detach() * bs              # tensor, stays on GPU
@@ -77,23 +71,18 @@ def evaluate(
     n = 0
 
     it = _get_pbar(loader, desc="val", enable=use_tqdm)
-    
-    head_dims = torch.tensor(model.get_head_dims(), device=device, dtype=torch.float32)
-    head_dim_sum = head_dims.sum()
 
     for step, batch in enumerate(it):
         x, labels = _to_device(batch, device)
 
         with torch.amp.autocast(device_type="cuda", dtype=torch.float16, enabled=amp):
             logits = model.get_coarse_level_logits(x)
-            loss_values = torch.stack([criterion(logit, labels[:, idx]) 
-                                for idx, logit in enumerate(logits)])
-            loss = loss_values @ head_dims / head_dim_sum
+            loss = torch.stack([criterion(logit, labels[:, idx]) 
+                                for idx, logit in enumerate(logits)]).mean()
 
-        acc_values = torch.stack([(logit.argmax(1) == labels[:, idx]).float().mean() 
-                           for idx, logit in enumerate(logits)])
-        
-        acc = acc_values @ head_dims / head_dim_sum
+        acc = torch.stack([(logit.argmax(1) == labels[:, idx]).float().mean() 
+                           for idx, logit in enumerate(logits)]).mean()
+    
 
         bs = x.size(0)
         total_loss += loss.detach() * bs              # tensor, stays on GPU

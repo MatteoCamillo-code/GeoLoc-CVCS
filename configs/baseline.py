@@ -12,10 +12,15 @@ class TrainConfig:
     scheduler_gamma: float = 0.5
     max_epochs: int = 30
     patience: int = 5
+    delta_patience: float = 1e-3
     amp: bool = True
     device: str = "cuda"
-    model_name: str = "first_try.pt"
+    model_name: str = "baseline_single_head"
     use_tqdm: bool = True
+    
+    dropout: float = 0.0 
+    
+    coarse_label_idx: list[int] = (1,)  # indices of the labels to be used for multi-head classification
 
     # IMPORTANT: relative-to-root output folder name
     output_dir: str = "outputs"
