@@ -1,6 +1,7 @@
 import s2sphere
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 
 def get_s2_cell_id(lat, lng, level=30):
     """
@@ -46,12 +47,6 @@ def perform_train_val_split(df, split_ratio=0.85, random_seed=42):
     df_train = df[df['is_train'] == 1].copy()
     df_val = df[df['is_train'] == 0].copy()
     return df_train, df_val
-
-import s2sphere
-import pandas as pd
-from tqdm import tqdm
-
-# ... (keep your existing functions: get_s2_cell_id, get_cell_vertices, etc.)
 
 def create_cell_center_dataset(configs: list, trained_partitions: dict) -> pd.DataFrame:
     """
