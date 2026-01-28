@@ -179,3 +179,14 @@
 [15:48:05] INFO - Training completed.
 [15:48:05] INFO - Starting training baseline_multi_head_ISN for scene urban ...
 [15:48:26] INFO - Epoch 1/3 | train loss=6.0682 acc=32.01% | val loss=6.8073 acc=6.70% | geo acc={'acc@1km': 2.42, 'acc@5km': 12.98, 'acc@25km': 34.03, 'acc@100km': 41.73} 
+[15:50:23] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[15:51:14] INFO - Epoch 1/3 | train loss=7.3188 acc=0.95% | val loss=7.1564 acc=2.14% | geo acc={'acc@1km': '0.51%', 'acc@5km': '4.83%', 'acc@25km': '20.87%', 'acc@100km': '26.46%'} | time=50.4s
+[15:51:33] INFO - Epoch 2/3 | train loss=6.7475 acc=8.15% | val loss=7.0056 acc=4.35% | geo acc={'acc@1km': '1.27%', 'acc@5km': '9.10%', 'acc@25km': '25.25%', 'acc@100km': '32.25%'} | time=19.4s
+[15:51:53] INFO - Epoch 3/3 | train loss=6.3808 acc=19.40% | val loss=6.8949 acc=5.45% | geo acc={'acc@1km': '2.16%', 'acc@5km': '11.51%', 'acc@25km': '31.17%', 'acc@100km': '37.72%'} | time=19.6s
+[15:51:53] INFO - Training completed.
+[15:51:53] INFO - Starting training baseline_multi_head_ISN for scene natural ...
+[15:53:04] INFO - Epoch 1/3 | train loss=7.4426 acc=5.00% | val loss=7.0849 acc=11.15% | geo acc={'acc@1km': '0.21%', 'acc@5km': '5.55%', 'acc@25km': '16.06%', 'acc@100km': '27.73%'} | time=70.4s
+[15:53:51] INFO - Epoch 2/3 | train loss=6.5231 acc=24.66% | val loss=6.6918 acc=18.52% | geo acc={'acc@1km': '0.66%', 'acc@5km': '10.64%', 'acc@25km': '27.39%', 'acc@100km': '40.92%'} | time=46.4s
+[15:54:34] INFO - Epoch 3/3 | train loss=5.9588 acc=40.08% | val loss=6.4141 acc=22.95% | geo acc={'acc@1km': '1.19%', 'acc@5km': '14.25%', 'acc@25km': '34.87%', 'acc@100km': '48.25%'} | time=43.3s
+[15:54:35] INFO - Training completed.
+[16:04:06] INFO - Starting training baseline_multi_head_ISN for scene urban ...
