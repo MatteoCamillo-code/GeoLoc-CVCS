@@ -20,6 +20,7 @@ class S2Config:
         self.OUTPUT_TRAIN = self.OUTPUT_DIR / "train_val_split_geocells.csv"
         self.OUTPUT_TEST = self.OUTPUT_DIR / "test_geocells.csv"
         self.OUTPUT_CELL_CENTER = self.OUTPUT_DIR / "cell_center_dataset.csv"
+        self.OUTPUT_CELL_HIERARCHY = self.OUTPUT_DIR / "cell_hierarchy_dataset.csv"
 
         # --- Partitioning Configurations ---
         # List of different tau_max values to test for partitioning
