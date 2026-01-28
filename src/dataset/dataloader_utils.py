@@ -41,6 +41,7 @@ def create_dataloaders(
     seed=42,
     train_subset_pct=100.0,
     val_subset_pct=100.0,
+    scenes=["total"],
     augment=True,
     prefetch_factor=4,
     persistent_workers=True,
@@ -86,78 +87,83 @@ def create_dataloaders(
     """
     # Create transforms
     train_transform, val_transform = create_transforms(img_size, augment=augment)
+    
+    data_loaders = {}
+    
+    for sc in scenes:
+        # Create full datasets
+        train_dataset = OSV_mini(
+            image_root=image_root,
+            csv_path=csv_path,
+            transform=train_transform,
+            split="train",
+            scene=sc,
+            label_maps=None,
+            coarse_label_idx=coarse_label_idx,
+        )
 
-    # Create full datasets
-    train_dataset = OSV_mini(
-        image_root=image_root,
-        csv_path=csv_path,
-        transform=train_transform,
-        split="train",
-        scene="total",
-        label_maps=None,
-        coarse_label_idx=coarse_label_idx,
-    )
+        val_dataset = OSV_mini(
+            image_root=image_root,
+            csv_path=csv_path,
+            transform=val_transform,
+            split="val",
+            scene=sc,
+            label_maps=train_dataset.label_maps,
+            coarse_label_idx=coarse_label_idx,
+        )
 
-    val_dataset = OSV_mini(
-        image_root=image_root,
-        csv_path=csv_path,
-        transform=val_transform,
-        split="val",
-        scene="total",
-        label_maps=train_dataset.label_maps,
-        coarse_label_idx=coarse_label_idx,
-    )
+        # Apply subsetting if requested
+        if train_subset_pct < 100.0:
+            train_size = int(len(train_dataset) * train_subset_pct / 100.0)
+            indices = torch.randperm(len(train_dataset))[:train_size].tolist()
+            train_dataset = Subset(train_dataset, indices)
 
-    # Apply subsetting if requested
-    if train_subset_pct < 100.0:
-        train_size = int(len(train_dataset) * train_subset_pct / 100.0)
-        indices = torch.randperm(len(train_dataset))[:train_size].tolist()
-        train_dataset = Subset(train_dataset, indices)
+        if val_subset_pct < 100.0:
+            val_size = int(len(val_dataset) * val_subset_pct / 100.0)
+            indices = torch.randperm(len(val_dataset))[:val_size].tolist()
+            val_dataset = Subset(val_dataset, indices)
 
-    if val_subset_pct < 100.0:
-        val_size = int(len(val_dataset) * val_subset_pct / 100.0)
-        indices = torch.randperm(len(val_dataset))[:val_size].tolist()
-        val_dataset = Subset(val_dataset, indices)
+        # Create generator for reproducibility
+        g = torch.Generator()
+        g.manual_seed(seed)
 
-    # Create generator for reproducibility
-    g = torch.Generator()
-    g.manual_seed(seed)
+        # Adjust worker settings
+        use_workers = num_workers > 0
+        prefetch = prefetch_factor if use_workers else None
+        persistent = persistent_workers if use_workers else False
 
-    # Adjust worker settings
-    use_workers = num_workers > 0
-    prefetch = prefetch_factor if use_workers else None
-    persistent = persistent_workers if use_workers else False
+        # Create DataLoaders
+        train_loader = DataLoader(
+            train_dataset,
+            shuffle=True,
+            batch_size=batch_size,
+            num_workers=num_workers,
+            pin_memory=True,
+            prefetch_factor=prefetch,
+            persistent_workers=persistent,
+            collate_fn=fast_collate,
+            worker_init_fn=seed_worker if use_workers else None,
+            generator=g,
+        )
 
-    # Create DataLoaders
-    train_loader = DataLoader(
-        train_dataset,
-        shuffle=True,
-        batch_size=batch_size,
-        num_workers=num_workers,
-        pin_memory=True,
-        prefetch_factor=prefetch,
-        persistent_workers=persistent,
-        collate_fn=fast_collate,
-        worker_init_fn=seed_worker if use_workers else None,
-        generator=g,
-    )
+        val_loader = DataLoader(
+            val_dataset,
+            shuffle=False,
+            batch_size=batch_size,
+            num_workers=num_workers,
+            pin_memory=True,
+            prefetch_factor=prefetch,
+            persistent_workers=persistent,
+            collate_fn=fast_collate,
+            worker_init_fn=seed_worker if use_workers else None,
+        )
+        
+        data_loaders[sc] = {
+            "train_loader": train_loader,
+            "val_loader": val_loader,
+            "label_maps": train_dataset.dataset.label_maps if isinstance(train_dataset, Subset) else train_dataset.label_maps,
+            "train_size": len(train_dataset),
+            "val_size": len(val_dataset),
+        }
 
-    val_loader = DataLoader(
-        val_dataset,
-        shuffle=False,
-        batch_size=batch_size,
-        num_workers=num_workers,
-        pin_memory=True,
-        prefetch_factor=prefetch,
-        persistent_workers=persistent,
-        collate_fn=fast_collate,
-        worker_init_fn=seed_worker if use_workers else None,
-    )
-
-    return {
-        "train_loader": train_loader,
-        "val_loader": val_loader,
-        "label_maps": train_dataset.dataset.label_maps if isinstance(train_dataset, Subset) else train_dataset.label_maps,
-        "train_size": len(train_dataset),
-        "val_size": len(val_dataset),
-    }
+    return data_loaders

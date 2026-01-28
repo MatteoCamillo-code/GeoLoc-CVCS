@@ -23,5 +23,5 @@ def haversine_km(latlon1: torch.Tensor, latlon2: torch.Tensor) -> torch.Tensor:
 
 @torch.no_grad()
 def geo_accuracy(dist_km: torch.Tensor, thresholds=(1,5,25,100)) -> dict:
-    """Return accuracy at multiple distance thresholds (km)."""
-    return {f"acc@{t}km": (dist_km <= t).float().mean().item() for t in thresholds}
+    """Return accuracy at multiple distance thresholds (km) as percentages."""
+    return {f"acc@{t}km": f"{round((dist_km <= t).float().mean().item() * 100, 2):.2f}%" for t in thresholds}

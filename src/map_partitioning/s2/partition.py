@@ -52,7 +52,7 @@ def run_partitioning(df_points, tau_max, start_level=4):
         
     return leaf_cells_result
 
-def s2_partitioning(df_train: pd.DataFrame, configs: list):
+def s2_partitioning(df_train: pd.DataFrame, df_val: pd.DataFrame, configs: list):
     """
     Applies S2 cell partitioning to the training DataFrame based on different configurations.
     For each configuration, it identifies leaf cells, creates lookup dictionaries, and assigns
@@ -81,6 +81,7 @@ def s2_partitioning(df_train: pd.DataFrame, configs: list):
         # Assign labels to the training DataFrame using the fast_assign_label function
         col_name = f"label_{cfg['name']}"
         df_train.loc[:, col_name] = [fast_assign_label(p, lookup) for p in tqdm(df_train['s2_cell'], desc=f" Mapping {cfg['name']}")]
+        df_val.loc[:, col_name] = [fast_assign_label(p, lookup) for p in tqdm(df_val['s2_cell'], desc=f" Mapping {cfg['name']}")]
 
     print("\n \nS2 Cell Partitioning and Labeling completed.")
-    return trained_partitions, trained_lookups, df_train
+    return trained_partitions, trained_lookups, df_train, df_val

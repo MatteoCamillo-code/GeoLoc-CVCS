@@ -14,11 +14,12 @@ class CrossEntropyWithLabelSmoothing(nn.Module):
         if self.smoothing <= 0.0:
             return F.cross_entropy(logits, target, ignore_index=self.ignore_index)
 
-        # mask ignored targets
+        # Handle ignore_index by masking first
         mask = target != self.ignore_index
         if mask.sum() == 0:
-            return logits.sum() * 0.0
-
+            return torch.tensor(0.0, device=logits.device, dtype=logits.dtype)
+        
+        # Filter out ignored samples
         logits = logits[mask]
         target = target[mask]
 
@@ -31,4 +32,7 @@ class CrossEntropyWithLabelSmoothing(nn.Module):
             true_dist.fill_(self.smoothing / (n_classes - 1))
             true_dist.scatter_(1, target.unsqueeze(1), 1.0 - self.smoothing)
 
-        return torch.mean(torch.sum(-true_dist * log_probs, dim=-1))
+        # Compute loss
+        loss = torch.sum(-true_dist * log_probs, dim=-1)
+        
+        return torch.mean(loss)

@@ -1,0 +1,181 @@
+[15:54:11] INFO - Starting training multi head with weighted loss...
+[15:58:57] INFO - Epoch 1/30 | train loss=inf acc=11.97% | val loss=5.5420 acc=20.87% | time=285.88s
+[16:01:59] INFO - Epoch 2/30 | train loss=4.7928 acc=32.45% | val loss=4.9843 acc=26.41% | time=181.68s
+[16:05:10] INFO - Epoch 3/30 | train loss=4.0711 acc=39.05% | val loss=4.3701 acc=31.29% | time=191.10s
+[16:08:54] INFO - Epoch 4/30 | train loss=3.3230 acc=48.57% | val loss=4.0006 acc=34.53% | time=223.48s
+[16:11:57] INFO - Epoch 5/30 | train loss=2.8081 acc=55.84% | val loss=3.7340 acc=37.31% | time=182.09s
+[16:15:12] INFO - Epoch 6/30 | train loss=2.4283 acc=61.59% | val loss=3.5575 acc=38.93% | time=194.66s
+[16:18:09] INFO - Epoch 7/30 | train loss=2.1244 acc=66.24% | val loss=3.4198 acc=40.53% | time=177.09s
+[16:21:49] INFO - Epoch 8/30 | train loss=1.8835 acc=70.05% | val loss=3.3158 acc=41.51% | time=219.60s
+[16:24:54] INFO - Epoch 9/30 | train loss=1.6867 acc=73.25% | val loss=3.2291 acc=42.47% | time=184.35s
+[16:28:22] INFO - Epoch 10/30 | train loss=1.5150 acc=76.13% | val loss=3.1551 acc=43.20% | time=208.47s
+[16:31:17] INFO - Epoch 11/30 | train loss=1.3730 acc=78.39% | val loss=3.1141 acc=43.71% | time=174.26s
+[16:34:12] INFO - Epoch 12/30 | train loss=1.2461 acc=80.51% | val loss=3.0657 acc=44.09% | time=174.33s
+[16:37:07] INFO - Epoch 13/30 | train loss=1.1421 acc=82.17% | val loss=3.0342 acc=44.38% | time=174.84s
+[16:40:02] INFO - Epoch 14/30 | train loss=1.0479 acc=83.68% | val loss=3.0070 acc=44.93% | time=174.36s
+[16:42:56] INFO - Epoch 15/30 | train loss=0.9669 acc=84.95% | val loss=2.9901 acc=45.19% | time=174.07s
+[16:45:51] INFO - Epoch 16/30 | train loss=0.8928 acc=86.15% | val loss=2.9642 acc=45.41% | time=174.93s
+[16:48:46] INFO - Epoch 17/30 | train loss=0.8301 acc=87.12% | val loss=2.9651 acc=45.62% | time=174.06s
+[16:51:41] INFO - Epoch 18/30 | train loss=0.7729 acc=88.02% | val loss=2.9423 acc=45.73% | time=175.13s
+[16:54:36] INFO - Epoch 19/30 | train loss=0.7243 acc=88.77% | val loss=2.9316 acc=46.01% | time=174.98s
+[16:57:30] INFO - Epoch 20/30 | train loss=0.6745 acc=89.66% | val loss=2.9337 acc=45.94% | time=173.15s
+[17:00:22] INFO - Epoch 21/30 | train loss=0.6358 acc=90.09% | val loss=2.9355 acc=46.04% | time=172.43s
+[17:03:15] INFO - Epoch 22/30 | train loss=0.6085 acc=90.43% | val loss=2.9115 acc=46.53% | time=172.17s
+[17:06:08] INFO - Epoch 23/30 | train loss=0.5664 acc=91.11% | val loss=2.9286 acc=46.38% | time=172.91s
+[17:09:03] INFO - Epoch 24/30 | train loss=0.5377 acc=91.55% | val loss=2.9219 acc=46.65% | time=174.68s
+[17:11:58] INFO - Epoch 25/30 | train loss=0.5140 acc=91.86% | val loss=2.9239 acc=46.60% | time=175.05s
+[17:14:53] INFO - Epoch 26/30 | train loss=0.4878 acc=92.29% | val loss=2.9170 acc=46.82% | time=175.17s
+[17:17:48] INFO - Epoch 27/30 | train loss=0.4631 acc=92.62% | val loss=2.9256 acc=46.64% | time=173.99s
+[17:20:41] INFO - Epoch 28/30 | train loss=0.4452 acc=92.90% | val loss=2.9168 acc=46.97% | time=173.50s
+[17:23:35] INFO - Epoch 29/30 | train loss=0.4300 acc=93.07% | val loss=2.9391 acc=47.00% | time=173.37s
+[17:26:29] INFO - Epoch 30/30 | train loss=0.4077 acc=93.40% | val loss=2.9333 acc=46.96% | time=173.79s
+[18:56:56] INFO - Starting training baseline_single_head with weighted loss...
+[19:00:17] INFO - Epoch 1/30 | train loss=6.2959 acc=12.49% | val loss=5.3358 acc=21.68% | time=200.43s
+[19:03:07] INFO - Epoch 2/30 | train loss=4.6881 acc=31.33% | val loss=4.7951 acc=26.96% | time=169.67s
+[19:05:56] INFO - Epoch 3/30 | train loss=4.0139 acc=37.80% | val loss=4.1989 acc=32.16% | time=169.57s
+[19:08:45] INFO - Epoch 4/30 | train loss=3.3259 acc=46.51% | val loss=3.8397 acc=35.51% | time=168.25s
+[19:11:33] INFO - Epoch 5/30 | train loss=2.8537 acc=53.35% | val loss=3.5830 acc=37.97% | time=168.13s
+[19:14:21] INFO - Epoch 6/30 | train loss=2.5029 acc=58.71% | val loss=3.4078 acc=39.95% | time=167.97s
+[19:17:10] INFO - Epoch 7/30 | train loss=2.2217 acc=63.01% | val loss=3.2702 acc=41.66% | time=168.25s
+[19:19:58] INFO - Epoch 8/30 | train loss=1.9946 acc=66.75% | val loss=3.1688 acc=42.56% | time=168.05s
+[19:22:46] INFO - Epoch 9/30 | train loss=1.8094 acc=69.76% | val loss=3.0815 acc=43.31% | time=168.17s
+[19:25:35] INFO - Epoch 10/30 | train loss=1.6435 acc=72.69% | val loss=3.0041 acc=44.54% | time=168.14s
+[19:28:23] INFO - Epoch 11/30 | train loss=1.5062 acc=75.00% | val loss=2.9574 acc=44.84% | time=168.28s
+[19:31:11] INFO - Epoch 12/30 | train loss=1.3811 acc=77.27% | val loss=2.9052 acc=45.09% | time=167.90s
+[19:34:00] INFO - Epoch 13/30 | train loss=1.2786 acc=79.01% | val loss=2.8719 acc=45.28% | time=168.31s
+[19:36:48] INFO - Epoch 14/30 | train loss=1.1836 acc=80.65% | val loss=2.8436 acc=46.05% | time=168.19s
+[19:39:36] INFO - Epoch 15/30 | train loss=1.0996 acc=82.03% | val loss=2.8250 acc=46.30% | time=168.14s
+[19:42:24] INFO - Epoch 16/30 | train loss=1.0232 acc=83.45% | val loss=2.7957 acc=46.45% | time=168.02s
+[19:45:13] INFO - Epoch 17/30 | train loss=0.9573 acc=84.61% | val loss=2.7953 acc=46.51% | time=168.31s
+[19:48:01] INFO - Epoch 18/30 | train loss=0.8952 acc=85.57% | val loss=2.7660 acc=46.83% | time=168.04s
+[19:50:50] INFO - Epoch 19/30 | train loss=0.8443 acc=86.41% | val loss=2.7536 acc=47.09% | time=168.30s
+[19:53:38] INFO - Epoch 20/30 | train loss=0.7889 acc=87.55% | val loss=2.7529 acc=46.91% | time=167.96s
+[19:56:26] INFO - Epoch 21/30 | train loss=0.7473 acc=88.10% | val loss=2.7499 acc=47.02% | time=168.17s
+[19:59:14] INFO - Epoch 22/30 | train loss=0.7155 acc=88.50% | val loss=2.7301 acc=47.65% | time=168.11s
+[20:02:03] INFO - Epoch 23/30 | train loss=0.6687 acc=89.32% | val loss=2.7407 acc=47.48% | time=168.42s
+[20:04:51] INFO - Epoch 24/30 | train loss=0.6358 acc=89.88% | val loss=2.7303 acc=47.54% | time=168.08s
+[20:07:39] INFO - Epoch 25/30 | train loss=0.6093 acc=90.30% | val loss=2.7296 acc=47.80% | time=168.17s
+[20:10:27] INFO - Epoch 26/30 | train loss=0.5772 acc=90.83% | val loss=2.7260 acc=47.91% | time=168.28s
+[20:13:20] INFO - Epoch 27/30 | train loss=0.5495 acc=91.28% | val loss=2.7262 acc=47.57% | time=172.71s
+[20:16:08] INFO - Epoch 28/30 | train loss=0.5283 acc=91.57% | val loss=2.7205 acc=48.01% | time=168.22s
+[20:18:57] INFO - Epoch 29/30 | train loss=0.5100 acc=91.84% | val loss=2.7339 acc=48.06% | time=168.23s
+[20:21:45] INFO - Epoch 30/30 | train loss=0.4835 acc=92.31% | val loss=2.7285 acc=48.07% | time=168.12s
+[18:29:11] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[18:30:37] INFO - Epoch 1/1 | train loss=6.7759 acc=2.87% | val loss=6.2849 acc=5.90% | time=85.81s
+[18:30:37] INFO - Training completed.
+[18:30:37] INFO - Starting training baseline_multi_head_ISN for scene natural ...
+[18:34:09] INFO - Epoch 1/1 | train loss=6.3311 acc=13.82% | val loss=5.3600 acc=23.07% | time=211.80s
+[18:34:09] INFO - Training completed.
+[22:32:52] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[22:34:29] INFO - Epoch 1/25 | train loss=6.7759 acc=2.87% | val loss=6.2849 acc=5.89% | time=96.87s
+[22:35:24] INFO - Epoch 2/25 | train loss=5.7024 acc=12.27% | val loss=5.8295 acc=9.41% | time=54.19s
+[22:36:18] INFO - Epoch 3/25 | train loss=5.0323 acc=20.42% | val loss=5.5118 acc=12.12% | time=54.37s
+[22:37:12] INFO - Epoch 4/25 | train loss=4.4944 acc=28.80% | val loss=5.2835 acc=13.59% | time=54.04s
+[22:38:07] INFO - Epoch 5/25 | train loss=4.0440 acc=36.35% | val loss=5.0888 acc=15.06% | time=54.17s
+[22:39:01] INFO - Epoch 6/25 | train loss=3.6780 acc=44.72% | val loss=5.0096 acc=16.49% | time=53.56s
+[22:39:55] INFO - Epoch 7/25 | train loss=3.5000 acc=48.15% | val loss=4.9513 acc=16.70% | time=53.61s
+[22:40:48] INFO - Epoch 8/25 | train loss=3.3411 acc=50.96% | val loss=4.8837 acc=17.35% | time=53.59s
+[22:41:42] INFO - Epoch 9/25 | train loss=3.1936 acc=53.56% | val loss=4.8243 acc=18.11% | time=53.67s
+[22:42:36] INFO - Epoch 10/25 | train loss=3.0515 acc=56.11% | val loss=4.7764 acc=18.44% | time=53.54s
+[22:43:30] INFO - Epoch 11/25 | train loss=2.9218 acc=58.81% | val loss=4.7856 acc=18.48% | time=53.39s
+[22:44:24] INFO - Epoch 12/25 | train loss=2.8485 acc=59.93% | val loss=4.7344 acc=19.05% | time=53.72s
+[22:45:17] INFO - Epoch 13/25 | train loss=2.7936 acc=60.81% | val loss=4.7185 acc=19.12% | time=53.54s
+[22:46:11] INFO - Epoch 14/25 | train loss=2.7479 acc=61.55% | val loss=4.6996 acc=19.40% | time=53.53s
+[22:47:05] INFO - Epoch 15/25 | train loss=2.6801 acc=62.46% | val loss=4.6833 acc=19.79% | time=53.49s
+[22:47:59] INFO - Epoch 16/25 | train loss=2.6291 acc=63.62% | val loss=4.6664 acc=19.79% | time=53.58s
+[22:48:52] INFO - Epoch 17/25 | train loss=2.5994 acc=64.02% | val loss=4.6646 acc=19.81% | time=53.51s
+[22:49:46] INFO - Epoch 18/25 | train loss=2.5730 acc=64.48% | val loss=4.6523 acc=19.96% | time=53.43s
+[22:50:40] INFO - Epoch 19/25 | train loss=2.5370 acc=65.31% | val loss=4.6490 acc=20.03% | time=53.67s
+[22:51:34] INFO - Epoch 20/25 | train loss=2.5196 acc=65.25% | val loss=4.6415 acc=20.14% | time=53.59s
+[22:52:27] INFO - Epoch 21/25 | train loss=2.4911 acc=66.02% | val loss=4.6443 acc=19.98% | time=53.51s
+[22:53:21] INFO - Epoch 22/25 | train loss=2.4701 acc=66.26% | val loss=4.6307 acc=20.41% | time=53.55s
+[22:54:15] INFO - Epoch 23/25 | train loss=2.4655 acc=66.25% | val loss=4.6332 acc=20.00% | time=53.38s
+[22:55:08] INFO - Epoch 24/25 | train loss=2.4546 acc=66.51% | val loss=4.6355 acc=19.88% | time=53.62s
+[22:56:02] INFO - Epoch 25/25 | train loss=2.4377 acc=66.68% | val loss=4.6339 acc=20.16% | time=53.58s
+[22:56:02] INFO - Training completed.
+[22:56:02] INFO - Starting training baseline_multi_head_ISN for scene natural ...
+[22:59:55] INFO - Epoch 1/25 | train loss=6.3311 acc=13.82% | val loss=5.3600 acc=23.08% | time=233.17s
+[23:02:03] INFO - Epoch 2/25 | train loss=4.4406 acc=35.40% | val loss=4.4162 acc=32.93% | time=128.01s
+[23:04:24] INFO - Epoch 3/25 | train loss=3.4778 acc=47.63% | val loss=3.8510 acc=38.83% | time=140.78s
+[23:07:27] INFO - Epoch 4/25 | train loss=2.8574 acc=55.91% | val loss=3.5263 acc=42.51% | time=182.45s
+[23:09:39] INFO - Epoch 5/25 | train loss=2.4077 acc=62.61% | val loss=3.2724 acc=45.04% | time=131.83s
+[23:11:46] INFO - Epoch 6/25 | train loss=2.0909 acc=68.30% | val loss=3.1472 acc=46.86% | time=126.70s
+[23:13:56] INFO - Epoch 7/25 | train loss=1.9415 acc=70.68% | val loss=3.0700 acc=47.72% | time=129.59s
+[23:16:04] INFO - Epoch 8/25 | train loss=1.8067 acc=72.86% | val loss=2.9767 acc=48.80% | time=127.80s
+[23:18:18] INFO - Epoch 9/25 | train loss=1.6949 acc=74.62% | val loss=2.9240 acc=49.42% | time=133.38s
+[23:20:23] INFO - Epoch 10/25 | train loss=1.5834 acc=76.21% | val loss=2.8527 acc=50.07% | time=124.70s
+[23:22:59] INFO - Epoch 11/25 | train loss=1.4833 acc=78.23% | val loss=2.8227 acc=50.46% | time=155.53s
+[23:25:08] INFO - Epoch 12/25 | train loss=1.4406 acc=78.87% | val loss=2.7935 acc=50.81% | time=129.26s
+[23:27:39] INFO - Epoch 13/25 | train loss=1.3940 acc=79.64% | val loss=2.7870 acc=51.05% | time=150.59s
+[23:29:48] INFO - Epoch 14/25 | train loss=1.3495 acc=80.29% | val loss=2.7505 acc=51.20% | time=128.91s
+[23:31:55] INFO - Epoch 15/25 | train loss=1.3063 acc=80.97% | val loss=2.7275 acc=51.55% | time=126.44s
+[23:34:04] INFO - Epoch 16/25 | train loss=1.2620 acc=81.79% | val loss=2.7148 acc=51.60% | time=128.76s
+[23:36:44] INFO - Epoch 17/25 | train loss=1.2456 acc=82.05% | val loss=2.7059 acc=51.76% | time=159.57s
+[23:38:48] INFO - Epoch 18/25 | train loss=1.2245 acc=82.36% | val loss=2.6896 acc=51.88% | time=123.89s
+[23:40:52] INFO - Epoch 19/25 | train loss=1.2155 acc=82.51% | val loss=2.6928 acc=52.00% | time=123.68s
+[23:42:56] INFO - Epoch 20/25 | train loss=1.1927 acc=82.85% | val loss=2.6708 acc=52.13% | time=123.60s
+[23:45:00] INFO - Epoch 21/25 | train loss=1.1720 acc=83.32% | val loss=2.6613 acc=52.14% | time=123.57s
+[23:47:04] INFO - Epoch 22/25 | train loss=1.1644 acc=83.39% | val loss=2.6672 acc=52.20% | time=123.69s
+[23:49:08] INFO - Epoch 23/25 | train loss=1.1577 acc=83.50% | val loss=2.6507 acc=52.35% | time=123.67s
+[23:51:12] INFO - Epoch 24/25 | train loss=1.1407 acc=83.87% | val loss=2.6542 acc=52.36% | time=123.61s
+[23:53:16] INFO - Epoch 25/25 | train loss=1.1377 acc=83.81% | val loss=2.6424 acc=52.43% | time=123.60s
+[23:53:16] INFO - Training completed.
+[11:20:54] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[11:21:27] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[11:22:20] INFO - Epoch 1/3 | train loss=7.1337 acc=0.83% | val loss=6.8691 acc=1.78% | time=52.84s
+[11:22:39] INFO - Epoch 2/3 | train loss=6.2011 acc=6.81% | val loss=6.6471 acc=4.07% | time=19.15s
+[11:22:59] INFO - Epoch 3/3 | train loss=5.6390 acc=16.70% | val loss=6.4842 acc=5.15% | time=19.22s
+[11:22:59] INFO - Training completed.
+[11:22:59] INFO - Starting training baseline_multi_head_ISN for scene natural ...
+[11:24:53] INFO - Epoch 1/3 | train loss=7.2172 acc=4.48% | val loss=6.6609 acc=10.29% | time=113.62s
+[11:26:19] INFO - Epoch 2/3 | train loss=5.7598 acc=22.60% | val loss=6.0260 acc=17.56% | time=85.50s
+[11:27:00] INFO - Epoch 3/3 | train loss=4.8491 acc=36.77% | val loss=5.5499 acc=21.98% | time=41.24s
+[11:27:01] INFO - Training completed.
+[12:18:43] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[12:25:46] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[12:28:12] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[12:29:02] INFO - Epoch 1/3 | train loss=7.3188 acc=0.95% | val loss=7.1564 acc=2.14% | time=50.10s
+[12:29:22] INFO - Epoch 2/3 | train loss=6.7475 acc=8.14% | val loss=7.0056 acc=4.37% | time=19.28s
+[12:29:41] INFO - Epoch 3/3 | train loss=6.3808 acc=19.39% | val loss=6.8949 acc=5.45% | time=19.40s
+[12:29:42] INFO - Training completed.
+[12:29:42] INFO - Starting training baseline_multi_head_ISN for scene natural ...
+[12:32:07] INFO - Epoch 1/3 | train loss=7.4426 acc=5.00% | val loss=7.0850 acc=11.16% | time=145.12s
+[12:32:49] INFO - Epoch 2/3 | train loss=6.5231 acc=24.66% | val loss=6.6918 acc=18.54% | time=42.00s
+[12:33:31] INFO - Epoch 3/3 | train loss=5.9588 acc=40.08% | val loss=6.4141 acc=22.92% | time=41.75s
+[12:33:32] INFO - Training completed.
+[14:28:08] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[14:31:49] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[14:39:46] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[14:47:44] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[15:05:55] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[15:08:27] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[15:09:46] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[15:13:05] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[15:22:03] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[15:33:05] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[15:33:55] INFO - Epoch 1/3 | train loss=7.3188 acc=0.95% | val loss=7.1564 acc=2.14% | time=50.14s
+[15:34:14] INFO - Epoch 2/3 | train loss=6.7475 acc=8.15% | val loss=7.0056 acc=4.35% | time=19.14s
+[15:34:34] INFO - Epoch 3/3 | train loss=6.3808 acc=19.40% | val loss=6.8949 acc=5.45% | time=19.40s
+[15:34:34] INFO - Training completed.
+[15:34:34] INFO - Starting training baseline_multi_head_ISN for scene natural ...
+[15:36:07] INFO - Epoch 1/3 | train loss=7.4426 acc=5.00% | val loss=7.0849 acc=11.15% | time=92.77s
+[15:36:52] INFO - Epoch 2/3 | train loss=6.5231 acc=24.66% | val loss=6.6918 acc=18.54% | time=45.26s
+[15:37:45] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[15:41:29] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[15:42:19] INFO - Epoch 1/3 | train loss=7.3188 acc=0.95% | val loss=7.1564 acc=2.14% | geo acc={'acc@1km': 0.005089058540761471, 'acc@5km': 0.048346057534217834, 'acc@25km': 0.20737913250923157, 'acc@100km': 0.2633587718009949} 
+[15:42:38] INFO - Epoch 2/3 | train loss=6.7475 acc=8.15% | val loss=7.0056 acc=4.35% | geo acc={'acc@1km': 0.012722646817564964, 'acc@5km': 0.09096692502498627, 'acc@25km': 0.2525445222854614, 'acc@100km': 0.32251909375190735} 
+[15:42:58] INFO - Epoch 3/3 | train loss=6.3808 acc=19.40% | val loss=6.8949 acc=5.45% | geo acc={'acc@1km': 0.021628499031066895, 'acc@5km': 0.11513994634151459, 'acc@25km': 0.31106871366500854, 'acc@100km': 0.3765903413295746} 
+[15:42:58] INFO - Training completed.
+[15:42:58] INFO - Starting training baseline_multi_head_ISN for scene natural ...
+[15:43:59] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[15:44:49] INFO - Epoch 1/3 | train loss=7.3188 acc=0.95% | val loss=7.1564 acc=2.14% | geo acc={'acc@1km': 0.51, 'acc@5km': 4.83, 'acc@25km': 20.87, 'acc@100km': 26.46} 
+[15:45:08] INFO - Epoch 2/3 | train loss=6.7475 acc=8.15% | val loss=7.0056 acc=4.35% | geo acc={'acc@1km': 1.27, 'acc@5km': 9.1, 'acc@25km': 25.25, 'acc@100km': 32.25} 
+[15:45:28] INFO - Epoch 3/3 | train loss=6.3808 acc=19.41% | val loss=6.8949 acc=5.45% | geo acc={'acc@1km': 2.16, 'acc@5km': 11.51, 'acc@25km': 31.11, 'acc@100km': 37.66} 
+[15:45:28] INFO - Training completed.
+[15:45:28] INFO - Starting training baseline_multi_head_ISN for scene natural ...
+[15:46:39] INFO - Epoch 1/3 | train loss=7.4426 acc=5.00% | val loss=7.0849 acc=11.15% | geo acc={'acc@1km': 0.21, 'acc@5km': 5.55, 'acc@25km': 16.06, 'acc@100km': 27.76} 
+[15:47:22] INFO - Epoch 2/3 | train loss=6.5231 acc=24.66% | val loss=6.6918 acc=18.54% | geo acc={'acc@1km': 0.69, 'acc@5km': 10.67, 'acc@25km': 27.42, 'acc@100km': 40.98} 
+[15:48:04] INFO - Epoch 3/3 | train loss=5.9588 acc=40.08% | val loss=6.4141 acc=22.93% | geo acc={'acc@1km': 1.19, 'acc@5km': 14.25, 'acc@25km': 34.82, 'acc@100km': 48.25} 
+[15:48:05] INFO - Training completed.
+[15:48:05] INFO - Starting training baseline_multi_head_ISN for scene urban ...
+[15:48:26] INFO - Epoch 1/3 | train loss=6.0682 acc=32.01% | val loss=6.8073 acc=6.70% | geo acc={'acc@1km': 2.42, 'acc@5km': 12.98, 'acc@25km': 34.03, 'acc@100km': 41.73} 
