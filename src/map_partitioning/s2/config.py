@@ -14,6 +14,7 @@ OUTPUT_DIR = DATA_DIR / "metadata" / "s2-geo-cells"
 OUTPUT_TRAIN = OUTPUT_DIR / "train_val_split_geocells.csv"
 OUTPUT_TEST = OUTPUT_DIR / "test_geocells.csv"
 OUTPUT_CELL_CENTER = OUTPUT_DIR / "cell_center_dataset.csv"
+OUTPUT_CELL_HIERARCHY = OUTPUT_DIR / "cell_hierarchy_dataset.csv"
 
 # --- Partitioning Configurations ---
 # List of different tau_max values to test for partitioning
