@@ -15,3 +15,7 @@ def write_text(path: Union[str, Path], text: str) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
+
+def read_json(path: Union[str, Path]):
+    with Path(path).open("r", encoding="utf-8") as f:
+        return json.load(f)
