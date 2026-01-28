@@ -10,8 +10,8 @@ from utils.logging import get_logger
 from utils.paths import abs_path
 from utils.io import save_json
 
-def fit(cfg, model, data_loader, cell_centers, optimizer, 
-        criterion, scaler, scene, scheduler=None, 
+def fit(cfg, model, data_loader, cell_centers, cells_hierarchy, 
+        optimizer, criterion, scaler, scene, scheduler=None, 
         label_idx: int = 0, use_tqdm: bool = True, logger=None, 
         history_path=None, version: int = 0,):
     if logger is None:
@@ -39,7 +39,7 @@ def fit(cfg, model, data_loader, cell_centers, optimizer,
         start_time = time()
         
         tr = train_one_epoch(model, train_loader, optimizer, criterion, scaler, cfg.device, amp=cfg.amp, use_tqdm=use_tqdm)
-        va = evaluate(model, val_loader, cell_centers, labels_map, criterion, cfg.device, amp=cfg.amp, use_tqdm=use_tqdm)
+        va = evaluate(model, val_loader, cell_centers, cells_hierarchy, labels_map, criterion, cfg.device, amp=cfg.amp, use_tqdm=use_tqdm)
 
         epoch_time = time() - start_time
 
