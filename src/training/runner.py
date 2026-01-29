@@ -12,8 +12,7 @@ from utils.io import save_json
 
 def fit(cfg, model, data_loader, cell_centers, cells_hierarchy, 
         optimizer, criterion, scaler, scene, scheduler=None, 
-        label_idx: int = 0, use_tqdm: bool = True, logger=None, 
-        history_path=None, version: int = 0,):
+        use_tqdm: bool = True, logger=None, history_path=None, version: int = 0,):
     if logger is None:
         logger = get_logger(log_file=str(abs_path(cfg.output_dir, "logs", "train.log")))
 
@@ -22,11 +21,6 @@ def fit(cfg, model, data_loader, cell_centers, cells_hierarchy,
     val_loader = data_loader["val_loader"]
     train_loader = data_loader["train_loader"]
     labels_map_dict = data_loader["label_maps"]
-    
-    # Extract the label map for the coarsest level (last in cfg.coarse_label_idx)
-    coarse_idx = cfg.coarse_label_idx[0]
-    labels_map_key = f"label_config_{coarse_idx + 1}"
-    labels_map = labels_map_dict[labels_map_key]
     
     history = {"train_loss": [], "train_acc": [], "val_loss": [], 
                "val_acc": [], "geo_acc": [], "val_size": len(val_loader.dataset), "train_size": len(train_loader.dataset)}
@@ -38,8 +32,11 @@ def fit(cfg, model, data_loader, cell_centers, cells_hierarchy,
     for epoch in range(cfg.max_epochs):
         start_time = time()
         
-        tr = train_one_epoch(model, train_loader, optimizer, criterion, scaler, cfg.device, amp=cfg.amp, use_tqdm=use_tqdm)
-        va = evaluate(model, val_loader, cell_centers, cells_hierarchy, labels_map, criterion, cfg.device, amp=cfg.amp, use_tqdm=use_tqdm)
+        tr = train_one_epoch(model, train_loader, optimizer, criterion, scaler, cfg.device, 
+                             amp=cfg.amp, use_tqdm=use_tqdm)
+        va = evaluate(model, val_loader, cell_centers, cells_hierarchy, 
+                      labels_map_dict, criterion, cfg.device, gps_method=cfg.gps_method, 
+                      amp=cfg.amp, use_tqdm=use_tqdm)
 
         epoch_time = time() - start_time
 

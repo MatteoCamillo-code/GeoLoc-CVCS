@@ -21,6 +21,8 @@ class TrainConfig:
     
     label_smoothing: float = 0.3
     
+    gps_method: str = "weighted"  # "weighted", "argmax"
+    
     scenes: list[str] = field(default_factory=lambda: ["total"])  # scenes to be used for ISN classification
     coarse_label_idx: list[int] = field(default_factory=lambda: [0, 1, 2])  # indices of the labels to be used for multi-head classification
     
