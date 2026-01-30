@@ -17,10 +17,21 @@ class S2Config:
 
         # Output Paths
         self.OUTPUT_DIR = self.DATA_DIR / "metadata" / "s2-geo-cells"
-        self.OUTPUT_TRAIN = self.OUTPUT_DIR / "train_val_split_geocells.csv"
-        self.OUTPUT_TEST = self.OUTPUT_DIR / "test_geocells.csv"
-        self.OUTPUT_CELL_CENTER = self.OUTPUT_DIR / "cell_center_dataset.csv"
-        self.OUTPUT_CELL_HIERARCHY = self.OUTPUT_DIR / "cell_hierarchy_dataset.csv"
+
+        self.OUTPUT_TRAIN = self.OUTPUT_DIR / "train_val_split_geocells_total.csv"
+        self.OUTPUT_TEST = self.OUTPUT_DIR / "test_geocells_total.csv"
+        self.OUTPUT_CELL_CENTER = self.OUTPUT_DIR / "cell_center_dataset_total.csv"
+        self.OUTPUT_CELL_HIERARCHY = self.OUTPUT_DIR / "cell_hierarchy_dataset_total.csv"
+
+        self.OUTPUT_TRAIN_URBAN = self.OUTPUT_DIR / "train_val_split_geocells_urban.csv"
+        self.OUTPUT_TEST_URBAN = self.OUTPUT_DIR / "test_geocells_urban.csv"
+        self.OUTPUT_CELL_CENTER_URBAN = self.OUTPUT_DIR / "cell_center_dataset_urban.csv"
+        self.OUTPUT_CELL_HIERARCHY_URBAN = self.OUTPUT_DIR / "cell_hierarchy_dataset_urban.csv"
+
+        self.OUTPUT_TRAIN_NATURAL = self.OUTPUT_DIR / "train_val_split_geocells_natural.csv"
+        self.OUTPUT_TEST_NATURAL = self.OUTPUT_DIR / "test_geocells_natural.csv"
+        self.OUTPUT_CELL_CENTER_NATURAL = self.OUTPUT_DIR / "cell_center_dataset_natural.csv"
+        self.OUTPUT_CELL_HIERARCHY_NATURAL = self.OUTPUT_DIR / "cell_hierarchy_dataset_natural.csv"
 
         # --- Partitioning Configurations ---
         # List of different tau_max values to test for partitioning
