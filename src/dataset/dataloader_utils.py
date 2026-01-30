@@ -46,6 +46,7 @@ def create_dataloaders(
     prefetch_factor=4,
     persistent_workers=True,
     coarse_label_idx: list[int] = [0],
+    shuffle_val: bool = False,
 ):
     """
     Create train and validation DataLoaders with optional dataset subsetting.
@@ -148,7 +149,7 @@ def create_dataloaders(
 
         val_loader = DataLoader(
             val_dataset,
-            shuffle=False,
+            shuffle=shuffle_val,
             batch_size=batch_size,
             num_workers=num_workers,
             pin_memory=True,

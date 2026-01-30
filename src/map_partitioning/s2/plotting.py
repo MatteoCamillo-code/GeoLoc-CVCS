@@ -1,7 +1,10 @@
+import os
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import geopandas as gpd
 import matplotlib.patches as patches
+from matplotlib.lines import Line2D
 from tqdm import tqdm
 
 # Note the absolute import here
@@ -145,3 +148,110 @@ def plot_s2_cell_maps(configs: list, trained_partitions: dict, df_train: pd.Data
         print(f"All S2 cell maps saved to {output_plot_dir}/")
 
     print("\nS2 Cell Map Generation Completed")
+
+def visualize_gps_predictions(predictions):
+    """
+    Visualize GPS predictions using matplotlib and geopandas.
+    
+    Args:
+        predictions: Dictionary with scene names as keys and prediction lists as values
+        
+    Returns:
+        dict: Statistics for each scene containing distances and accuracy metrics
+    """
+    
+    # Load USA map for background
+    print("Loading USA map for visualization...")
+    usa_url = "https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json"
+    usa = gpd.read_file(usa_url)
+    usa = usa[~usa['name'].isin(['Alaska', 'Hawaii', 'Puerto Rico'])]
+    
+    # Create figure with subplots for each scene
+    num_scenes = len(predictions)
+    fig, axes = plt.subplots(1, num_scenes, figsize=(15*num_scenes, 12))
+    if num_scenes == 1:
+        axes = [axes]
+    
+    # Collect statistics for return
+    stats = {}
+    
+    for idx, (scene, scene_preds) in enumerate(predictions.items()):
+        ax = axes[idx]
+        
+        # Plot USA background
+        usa.plot(ax=ax, color='#f2f2f2', edgecolor='#999999', zorder=1, alpha=0.7)
+        
+        # Extract data
+        lons_true = [p['true_gps'][1] for p in scene_preds]
+        lats_true = [p['true_gps'][0] for p in scene_preds]
+        lons_pred = [p['predicted_gps'][1] for p in scene_preds]
+        lats_pred = [p['predicted_gps'][0] for p in scene_preds]
+        distances = [p['distance_km'] for p in scene_preds]
+        
+        # Plot true GPS locations (blue circles)
+        ax.scatter(lons_true, lats_true, c='blue', s=200, marker='o', 
+                  label='True GPS', alpha=0.8, zorder=4, edgecolors='darkblue', linewidths=2)
+        
+        # Plot predicted GPS with color based on error
+        colors = ['green' if d < 5 else 'orange' if d < 25 else 'red' for d in distances]
+        ax.scatter(lons_pred, lats_pred, c=colors, s=200, marker='X', 
+                  label='Predicted GPS', alpha=0.8, zorder=5, edgecolors='black', linewidths=1.5)
+        
+        # Draw lines connecting true to predicted
+        for i in range(len(lats_true)):
+            ax.plot([lons_true[i], lons_pred[i]], [lats_true[i], lats_pred[i]], 
+                   color=colors[i], alpha=0.6, linewidth=2, linestyle='--', zorder=3)
+            
+            # Add sample number labels
+            ax.text(lons_true[i], lats_true[i], str(i+1), fontsize=9, 
+                   ha='center', va='center', color='white', weight='bold', zorder=6)
+        
+        # Calculate statistics for title
+        avg_dist = np.mean(distances)
+        median_dist = np.median(distances)
+        
+        # Set title with statistics
+        ax.set_title(f'{scene.upper()}\n'
+                    f'Avg Error: {avg_dist:.2f} km | Median: {median_dist:.2f} km | '
+                    f'Samples: {len(scene_preds)}', 
+                    fontsize=14, weight='bold')
+        
+        # Set map limits to USA contiguous states
+        ax.set_xlim([-126, -66])
+        ax.set_ylim([24, 50])
+        ax.set_xlabel('Longitude', fontsize=12)
+        ax.set_ylabel('Latitude', fontsize=12)
+        ax.grid(True, linestyle='--', alpha=0.3, zorder=2)
+        
+        # Create custom legend
+        legend_elements = [
+            Line2D([0], [0], marker='o', color='w', label='True GPS',
+                  markerfacecolor='blue', markersize=12, markeredgecolor='darkblue', markeredgewidth=2),
+            Line2D([0], [0], marker='X', color='w', label='Predicted (<5km)',
+                  markerfacecolor='green', markersize=12, markeredgecolor='black', markeredgewidth=1.5),
+            Line2D([0], [0], marker='X', color='w', label='Predicted (5-25km)',
+                  markerfacecolor='orange', markersize=12, markeredgecolor='black', markeredgewidth=1.5),
+            Line2D([0], [0], marker='X', color='w', label='Predicted (>25km)',
+                  markerfacecolor='red', markersize=12, markeredgecolor='black', markeredgewidth=1.5),
+        ]
+        ax.legend(handles=legend_elements, loc='upper right', fontsize=10, framealpha=0.9)
+        
+        # Store statistics for this scene
+        stats[scene] = {
+            'distances': distances,
+            'min': min(distances),
+            'max': max(distances),
+            'mean': np.mean(distances),
+            'std': np.std(distances),
+            'median': np.median(distances),
+            'within_1': sum(1 for d in distances if d < 1),
+            'within_5': sum(1 for d in distances if d < 5),
+            'within_25': sum(1 for d in distances if d < 25),
+            'within_100': sum(1 for d in distances if d < 100),
+            'total': len(distances)
+        }
+    
+    plt.tight_layout()
+    plt.show()
+    
+    return stats

@@ -49,22 +49,24 @@ def get_next_version(history_dir, base_name):
     
     return max_version + 1
 
-def get_current_version(history_dir, base_name):
+def get_current_version(base_dir, base_name, extension="json"):
     """
     Find the highest version number for a file and return it.
     
     Args:
-        history_dir: Path to the history directory
+        base_dir: Path to the base directory
         base_name: Base filename without extension (e.g., 'baseline_multihead_natural')
     Returns:
         Current highest version number (0 if no versioned files exist)
     """
-    history_dir = Path(history_dir)
-    pattern = rf"^{re.escape(base_name)}_v(\d+)_history\.json$"
+    base_dir = Path(base_dir)
+    pattern = rf"^{re.escape(base_name)}_v(\d+).{extension}$"
+    
+    print("Searching for files with pattern:", pattern)
     
     max_version = 0
-    if history_dir.exists():
-        for file in history_dir.iterdir():
+    if base_dir.exists():
+        for file in base_dir.iterdir():
             match = re.match(pattern, file.name)
             if match:
                 version = int(match.group(1))
