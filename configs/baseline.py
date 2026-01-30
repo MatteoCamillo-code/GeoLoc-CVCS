@@ -18,7 +18,9 @@ class TrainConfig:
     device: str = "cuda"
     model_name: str = "res_w_same_partitions"
     use_tqdm: bool = True
-    dropout: float = 0.0 
+    dropout: float = 0.0
+    use_cbam: bool = False
+    cbam_reduction: int = 16
     
     gps_method: str = "weighted"  # "weighted", "argmax"
     label_smoothing: float = 0.3
