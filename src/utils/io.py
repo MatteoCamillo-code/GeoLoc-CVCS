@@ -7,6 +7,11 @@ def save_json(path: Union[str, Path], obj) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:
         json.dump(obj, f, indent=2)
+        
+def delete_file(path: Union[str, Path]) -> None:
+    path = Path(path)
+    if path.exists():
+        path.unlink()
 
 def read_text(path: Union[str, Path]) -> str:
     return Path(path).read_text(encoding="utf-8")

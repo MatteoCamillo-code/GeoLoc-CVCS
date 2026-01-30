@@ -16,7 +16,7 @@ class TrainConfig:
     delta_patience: float = 1e-3
     amp: bool = True
     device: str = "cuda"
-    model_name: str = "baseline_multi_head_ISN_inceptionv4_weighted"
+    model_name: str = "MH_ISN_inceptionv4_w"
     use_tqdm: bool = True
     dropout: float = 0.0 
     

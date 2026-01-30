@@ -31,7 +31,7 @@ def overall_val_acc_from_history(cfg, project_root, version: int):
 
     # collect
     for scene in cfg.scenes:
-        history = read_json(project_root / "outputs" / "history" / f"{cfg.model_name}_{scene}_v{version}_history.json")
+        history = read_json(project_root / "outputs" / "history" / f"{cfg.model_name}_{scene}_v{version}.json")
         acc = history["val_acc"][-1]  # last epoch
         output[scene] = acc
         size = history["val_size"]

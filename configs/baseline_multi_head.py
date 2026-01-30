@@ -11,18 +11,18 @@ class TrainConfig:
     weight_decay: float = 1e-4
     scheduler_step_size: int = 5
     scheduler_gamma: float = 0.5
-    max_epochs: int = 20
+    max_epochs: int = 3
     patience: int = 5
     delta_patience: float = 1e-3
     amp: bool = True
     device: str = "cuda"
-    model_name: str = "baseline_multi_head"
+    model_name: str = "MH_res_w_same_partitions"
     use_tqdm: bool = True
     dropout: float = 0.0 
     
     label_smoothing: float = 0.3
     
-    gps_method: str = "argmax"  # "weighted", "argmax"
+    gps_method: str = "weighted"  # "weighted", "argmax"
     backbone: str = "resnet50"  # backbone model name
     
     scenes: list[str] = field(default_factory=lambda: ["total"])  # scenes to be used for ISN classification
