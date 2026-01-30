@@ -5,6 +5,7 @@ class TrainConfig:
     seed: int = 42
     batch_size: int = 128
     num_workers: int = 6
+    prefetch_factor: int = 4
     lr: float = 5e-4
     momentum: float = 0.9
     weight_decay: float = 1e-4

@@ -3,23 +3,26 @@ from dataclasses import dataclass, field
 @dataclass
 class TrainConfig:
     seed: int = 42
-    batch_size: int = 128
-    num_workers: int = 6
+    batch_size: int = 64
+    num_workers: int = 4
+    prefetch_factor: int = 2
     lr: float = 5e-4
     momentum: float = 0.9
     weight_decay: float = 1e-4
     scheduler_step_size: int = 5
     scheduler_gamma: float = 0.5
-    max_epochs: int = 30
+    max_epochs: int = 3
     patience: int = 5
     delta_patience: float = 1e-3
     amp: bool = True
     device: str = "cuda"
-    model_name: str = "baseline_multi_head_ISN_inceptionv4"
+    model_name: str = "baseline_multi_head_ISN_inceptionv4_weighted"
     use_tqdm: bool = True
     dropout: float = 0.0 
     
     label_smoothing: float = 0.3
+    
+    gps_method: str = "weighted"  # "weighted", "argmax"
     
     backbone: str = "inceptionv4"  # backbone model name
     

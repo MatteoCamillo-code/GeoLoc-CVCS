@@ -28,7 +28,8 @@ def geo_accuracy(dist_km: torch.Tensor, thresholds=(1,5,25,100)) -> dict:
     return {f"acc@{t}km": f"{round((dist_km <= t).float().mean().item() * 100, 2):.2f}%" for t in thresholds}
 
 def get_predicted_gps(predicted_class_indices, cell_centers, labels_map, device):
-    predicted_s2_cells = labels_map[predicted_class_indices]
+    # TODO: generalize for any level
+    predicted_s2_cells = labels_map.get("label_config_1")[predicted_class_indices]
     predicted_latlons_df = cell_centers.loc[predicted_s2_cells, ['center_latitude', 'center_longitude']]
     return torch.tensor(predicted_latlons_df.values, dtype=torch.float32, device=device)
 

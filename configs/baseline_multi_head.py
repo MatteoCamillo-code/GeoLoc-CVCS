@@ -5,6 +5,7 @@ class TrainConfig:
     seed: int = 42
     batch_size: int = 128
     num_workers: int = 6
+    prefetch_factor: int = 4
     lr: float = 5e-4
     momentum: float = 0.9
     weight_decay: float = 1e-4
@@ -21,7 +22,7 @@ class TrainConfig:
     
     label_smoothing: float = 0.3
     
-    gps_method: str = "weighted"  # "weighted", "argmax"
+    gps_method: str = "argmax"  # "weighted", "argmax"
     backbone: str = "resnet50"  # backbone model name
     
     scenes: list[str] = field(default_factory=lambda: ["total"])  # scenes to be used for ISN classification
