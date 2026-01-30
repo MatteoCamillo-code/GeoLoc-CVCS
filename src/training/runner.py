@@ -34,7 +34,7 @@ def fit(cfg, model, data_loader, cell_centers, cells_hierarchy,
         
         tr = train_one_epoch(model, train_loader, optimizer, criterion, loss_weights, scaler, cfg.device, 
                              amp=cfg.amp, use_tqdm=use_tqdm)
-        va = evaluate(model, val_loader, cell_centers, cells_hierarchy, 
+        va = evaluate(model, val_loader, criterion, loss_weights, cell_centers, cells_hierarchy, 
                       labels_map_dict, cfg.device, gps_method=cfg.gps_method, 
                       amp=cfg.amp, use_tqdm=use_tqdm)
 

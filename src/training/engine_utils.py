@@ -11,9 +11,9 @@ def compute_logits(model, x):
     return logits
 
 def compute_loss(model, logits, labels, criterion, loss_weights):
-    if loss_weights:
-      individual_loss = torch.stack([criterion(logit, labels[:, idx])
-                            for idx, logit in enumerate(logits)])
+    individual_loss = torch.stack([criterion(logit, labels[:, idx])
+                          for idx, logit in enumerate(logits)])
+    if loss_weights is not None:
       loss =(individual_loss*loss_weights).sum()
     else:
       loss = torch.stack([criterion(logit, labels[:, idx])
