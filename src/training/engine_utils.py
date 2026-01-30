@@ -6,11 +6,19 @@ def to_device(batch, device):
     x, labels, gps = batch
     return x.to(device, non_blocking=True), labels.to(device, non_blocking=True), gps.to(device, non_blocking=True) if gps is not None else None
 
-def compute_logits_and_loss(model, x, labels, criterion):
+def compute_logits(model, x):
     logits = model.get_coarse_level_logits(x)
-    loss = torch.stack([criterion(logit, labels[:, idx])
-                        for idx, logit in enumerate(logits)]).mean()
-    return logits, loss
+    return logits
+
+def compute_loss(model, logits, labels, criterion, loss_weights):
+    if loss_weights:
+      individual_loss = torch.stack([criterion(logit, labels[:, idx])
+                            for idx, logit in enumerate(logits)])
+      loss =(individual_loss*loss_weights).sum()
+    else:
+      loss = torch.stack([criterion(logit, labels[:, idx])
+                            for idx, logit in enumerate(logits)]).mean()
+    return loss
 
 def compute_accuracy(logits, labels):
     return torch.stack([(logit.argmax(1) == labels[:, idx]).float().mean()

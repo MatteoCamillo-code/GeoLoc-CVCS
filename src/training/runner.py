@@ -11,7 +11,7 @@ from utils.paths import abs_path
 from utils.io import save_json
 
 def fit(cfg, model, data_loader, cell_centers, cells_hierarchy, 
-        optimizer, criterion, scaler, scene, scheduler=None, 
+        optimizer, criterion, loss_weights, scaler, scene, scheduler=None, 
         use_tqdm: bool = True, logger=None, history_path=None, version: int = 0,):
     if logger is None:
         logger = get_logger(log_file=str(abs_path(cfg.output_dir, "logs", "train.log")))
@@ -32,10 +32,10 @@ def fit(cfg, model, data_loader, cell_centers, cells_hierarchy,
     for epoch in range(cfg.max_epochs):
         start_time = time()
         
-        tr = train_one_epoch(model, train_loader, optimizer, criterion, scaler, cfg.device, 
+        tr = train_one_epoch(model, train_loader, optimizer, criterion, loss_weights, scaler, cfg.device, 
                              amp=cfg.amp, use_tqdm=use_tqdm)
         va = evaluate(model, val_loader, cell_centers, cells_hierarchy, 
-                      labels_map_dict, criterion, cfg.device, gps_method=cfg.gps_method, 
+                      labels_map_dict, cfg.device, gps_method=cfg.gps_method, 
                       amp=cfg.amp, use_tqdm=use_tqdm)
 
         epoch_time = time() - start_time
