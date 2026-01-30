@@ -26,6 +26,7 @@ class TrainConfig:
     backbone: str = "resnet50"  # backbone model name
     
     scenes: list[str] = field(default_factory=lambda: ["total"])  # scenes to be used for ISN classification
+    same_partitions: bool = True  # whether to use same partitions for all coarse labels
     coarse_label_idx: list[int] = field(default_factory=lambda: [1])  # indices of the labels to be used for multi-head classification
     
     train_size_pct: float = 100.0 

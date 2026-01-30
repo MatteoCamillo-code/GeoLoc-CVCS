@@ -16,7 +16,7 @@ class TrainConfig:
     delta_patience: float = 1e-3
     amp: bool = True
     device: str = "cuda"
-    model_name: str = "MH_ISN_inceptionv4_w"
+    model_name: str = "MH_ISN_inceptionv4_w_same_partitions"
     use_tqdm: bool = True
     dropout: float = 0.0 
     
@@ -27,6 +27,7 @@ class TrainConfig:
     backbone: str = "inceptionv4"  # backbone model name
     
     scenes: list[str] = field(default_factory=lambda: ["urban", "natural"])  # scenes to be used for ISN classification
+    same_partitions: bool = True  # whether to use same partitions for all coarse labels
     coarse_label_idx: list[int] = field(default_factory=lambda: [0, 1, 2])  # indices of the labels to be used for multi-head classification
     
     train_size_pct: float = 100.0 

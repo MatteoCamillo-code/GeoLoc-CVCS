@@ -16,7 +16,7 @@ class TrainConfig:
     delta_patience: float = 1e-3
     amp: bool = True
     device: str = "cuda"
-    model_name: str = "MH_ISN_res_w"
+    model_name: str = "MH_ISN_res_w_same_partitions"
     use_tqdm: bool = True
     dropout: float = 0.0 
     
