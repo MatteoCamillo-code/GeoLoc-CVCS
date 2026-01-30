@@ -75,16 +75,17 @@ def evaluate(
 
         with torch.amp.autocast(device_type="cuda", dtype=torch.float16, enabled=amp):
             logits, loss = utils.compute_logits_and_loss(model, x, labels, criterion)
-            predicted_class_indices = logits[0].argmax(dim=1).cpu().numpy()
 
         acc = utils.compute_accuracy(logits, labels)
         
         if gps_method == "weighted":
             # Collect GPS predictions and ground truth (keep on GPU)
             predicted_gps.append(
-                get_weighted_predicted_gps(logits, cells_hierarchy, labels_map, 10, device)
+                get_weighted_predicted_gps(logits, cells_hierarchy, labels_map, 1, device)
             )
         else:
+            with torch.amp.autocast(device_type="cuda", dtype=torch.float16, enabled=amp):
+                predicted_class_indices = logits[0].argmax(dim=1).cpu().numpy()
             predicted_gps.append(
                 get_predicted_gps(predicted_class_indices, cell_centers, labels_map, device)
             )
