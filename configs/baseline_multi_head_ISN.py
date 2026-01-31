@@ -19,6 +19,8 @@ class TrainConfig:
     model_name: str = "MH_ISN_res_wd_sp"
     use_tqdm: bool = True
     dropout: float = 0.0 
+    use_cbam: bool = True
+    cbam_reduction: int = 16
     
     gps_method: str = "weighted"  # "weighted", "argmax"
     

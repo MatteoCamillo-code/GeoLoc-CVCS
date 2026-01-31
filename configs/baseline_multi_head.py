@@ -19,6 +19,8 @@ class TrainConfig:
     model_name: str = "MH_res_w_same_partitions"
     use_tqdm: bool = True
     dropout: float = 0.0 
+    use_cbam: bool = True
+    cbam_reduction: int = 16
     
     label_smoothing: float = 0.3
     

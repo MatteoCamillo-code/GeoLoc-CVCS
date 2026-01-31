@@ -3,6 +3,10 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+import s2sphere as s2
+import numpy as np
+import torch
+
 class CrossEntropyWithLabelSmoothing(nn.Module):
     def __init__(self, smoothing: float = 0.0, ignore_index: int = -1):
         super().__init__()
@@ -36,3 +40,26 @@ class CrossEntropyWithLabelSmoothing(nn.Module):
         loss = torch.sum(-true_dist * log_probs, dim=-1)
         
         return torch.mean(loss)
+
+def compute_loss_weights(label_maps, coarse_label_idx):
+
+    weights = []
+
+    for idx in coarse_label_idx:
+        cell_list = label_maps[f"label_config_{idx + 1}"].to_list()
+
+        sum_of_areas = 0
+
+        for cell in cell_list:
+
+          cell_id = s2.CellId.from_token(cell)  # example
+          cell = s2.Cell(cell_id)
+
+          area_m2 = cell.exact_area()
+          area_km2 = area_m2 / 1e6
+
+          sum_of_areas += area_km2
+
+        weights.append(len(cell_list)/sum_of_areas)
+
+    return torch.tensor(np.array(weights)/sum(weights), dtype=torch.float32, device=torch.device)

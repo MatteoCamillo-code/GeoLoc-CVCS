@@ -9,6 +9,7 @@ def train_one_epoch(
     loader,
     optimizer,
     criterion,
+    loss_weights, 
     scaler,
     device: torch.device,
     amp: bool = True,
@@ -27,8 +28,9 @@ def train_one_epoch(
         optimizer.zero_grad(set_to_none=True)
 
         with torch.amp.autocast(device_type="cuda", dtype=torch.float16, enabled=amp):
-            logits, loss = utils.compute_logits_and_loss(model, x, labels, criterion)
-            
+            logits = utils.compute_logits(model, x)
+            loss = utils.compute_loss(model, logits, labels, criterion, loss_weights)
+
         scaler.scale(loss).backward()
         scaler.step(optimizer)
         scaler.update()
@@ -52,10 +54,11 @@ def train_one_epoch(
 def evaluate(
     model,
     loader,
+    criterion,
+    loss_weights,
     cell_centers,
     cells_hierarchy,
     labels_map,
-    criterion,
     device: torch.device,
     gps_method: str = "weighted",
     amp: bool = True,
@@ -74,7 +77,8 @@ def evaluate(
         x, labels, gps = utils.to_device(batch, device)
 
         with torch.amp.autocast(device_type="cuda", dtype=torch.float16, enabled=amp):
-            logits, loss = utils.compute_logits_and_loss(model, x, labels, criterion)
+            logits = utils.compute_logits(model, x)
+            loss = utils.compute_loss(model, logits, labels, criterion, loss_weights)
 
         acc = utils.compute_accuracy(logits, labels)
         
