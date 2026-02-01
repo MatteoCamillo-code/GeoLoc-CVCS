@@ -13,7 +13,7 @@ class ProjectPaths:
         
         self.original_train_csv = self.root / "data" / "metadata" / "original-datasets" / "train_mini.csv"
         self.original_test_csv = self.root / "data" / "metadata" / "original-datasets" / "test_mini.csv"
-        self.output_train = self.root / "data" / "metadata" / "places-classification" / "train_with_predictions.csv"
+        self.output_train = self.root / "data" / "metadata" / "places-classification" / "train_val_with_predictions.csv"
         self.output_test = self.root / "data" / "metadata" / "places-classification" / "test_with_predictions.csv"
 
     def _find_project_root(self):
