@@ -1,0 +1,5 @@
+{
+  "name": "NeuralAtlas Geolocation Benchmark",
+  "description": "A high-fidelity benchmarking dashboard for Geolocation AI models, allowing human intuition to compete against machine vision across diverse geographic targets.",
+  "requestFramePermissions": []
+}
