@@ -1,4 +1,4 @@
-label,center_latitude,center_longitude,config_name
+cell_id_token,center_latitude,center_longitude,config_name
 0,43.706566,-121.27699,config_1
 1,34.820854,-97.23661,config_1
 2,39.780224,-120.037506,config_1
