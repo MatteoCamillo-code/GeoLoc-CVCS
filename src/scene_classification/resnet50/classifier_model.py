@@ -8,7 +8,7 @@ import torch.nn.functional as F
 from PIL import Image
 
 # Relative import to reach downloader.py in the parent 'src' folder
-from ..downloader import download_scene_hierarchy_file, download_pretrained_on_places
+from .downloader import download_scene_hierarchy_file, download_pretrained_on_places
 
 class SceneClassifier(torch.nn.Module):
     def __init__(self, scene_hierarchy_file='scene_hierarchy_places365.csv', model_name="resnet50"):
