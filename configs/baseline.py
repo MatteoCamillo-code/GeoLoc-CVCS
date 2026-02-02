@@ -18,7 +18,7 @@ class TrainConfig:
     device: str = "cuda"
     model_name: str = "res_cbam_wd_sp"
     use_tqdm: bool = True
-    dropout: float = 0.0
+    dropout: float = 0.1
     use_cbam: bool = True
     cbam_reduction: int = 16
     

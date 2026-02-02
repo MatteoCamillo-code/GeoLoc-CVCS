@@ -16,7 +16,6 @@ def create_transforms(img_size=224, augment=True):
             transforms.RandomResizedCrop(img_size, scale=(0.7, 1.0), ratio=(3/4, 4/3)),
             transforms.RandomHorizontalFlip(0.5),
             transforms.RandomApply([transforms.RandomRotation(10)], p=0.2),
-            transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
             transforms.ToTensor(),
         ])
     else:

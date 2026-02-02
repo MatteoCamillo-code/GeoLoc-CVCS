@@ -8,11 +8,12 @@ def partition(cell_id, points, tau_max, leaf_cells_result):
     """
     count = len(points)
     # Base case: if count is within threshold or maximum level reached
-    if count <= tau_max or cell_id.level() >= 30:
+    if (count <= tau_max or cell_id.level() >= 30) and count > 0:
         if count > 0:
             leaf_cells_result.append({'cell_id': cell_id, 'count': count})
         return
-
+    if count == 0:
+        return
     # Recursive step: subdivide into 4 children
     for i in range(4):
         child = cell_id.child(i)

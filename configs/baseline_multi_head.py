@@ -10,15 +10,15 @@ class TrainConfig:
     momentum: float = 0.9
     weight_decay: float = 1e-4
     scheduler_step_size: int = 5
-    scheduler_gamma: float = 0.5
+    scheduler_gamma: float = 0.3
     max_epochs: int = 15
     patience: int = 5
     delta_patience: float = 1e-3
     amp: bool = True
     device: str = "cuda"
-    model_name: str = "MH_res_cbam_wd_sp"
+    model_name: str = "MH_res_cbam_wd_sp_mp16"
     use_tqdm: bool = True
-    dropout: float = 0.0 
+    dropout: float = 0.1
     use_cbam: bool = True
     cbam_reduction: int = 16
     
