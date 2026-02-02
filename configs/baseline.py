@@ -16,7 +16,7 @@ class TrainConfig:
     delta_patience: float = 1e-3
     amp: bool = True
     device: str = "cuda"
-    model_name: str = "SH_osv_semantic"
+    model_name: str = "SH_osv_res_base_argmax_cbam_sem_4k_v0"
     use_tqdm: bool = True
     dropout: float = 0.0
     use_cbam: bool = True
