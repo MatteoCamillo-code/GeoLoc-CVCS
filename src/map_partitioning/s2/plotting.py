@@ -31,7 +31,7 @@ def plot_density_map(df: pd.DataFrame, title: str, x_label: str, y_label: str,
     usa.plot(ax=ax, color='lightgray', edgecolor='black', zorder=1, alpha=0.7)
 
     # Use hexbin for point density visualization
-    hb = ax.hexbin(df['longitude'], df['latitude'], gridsize=gridsize, 
+    hb = ax.hexbin(df['longitude'], df['latitude'], gridsize=gridsize, vmax=1000, 
                     cmap='viridis', mincnt=1, alpha=0.8, zorder=2)
     plt.colorbar(hb, ax=ax, label='Number of Images')
 
