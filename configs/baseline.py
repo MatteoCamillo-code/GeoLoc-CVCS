@@ -16,16 +16,17 @@ class TrainConfig:
     delta_patience: float = 1e-3
     amp: bool = True
     device: str = "cuda"
-    model_name: str = "res_wd_sp"
+    model_name: str = "res_cbam_wd_sp"
     use_tqdm: bool = True
     dropout: float = 0.0
-    use_cbam: bool = False
+    use_cbam: bool = True
     cbam_reduction: int = 16
     
     gps_method: str = "weighted"  # "weighted", "argmax"
     label_smoothing: float = 0.3
     
     backbone: str = "resnet50"  # backbone model name
+    image_size: int = 224  # input image size for the model
     
     scenes: list[str] = field(default_factory=lambda: ["total"])  # scenes to be used for ISN classification
     same_partitions: bool = True  # whether to use same partitions for all coarse labels

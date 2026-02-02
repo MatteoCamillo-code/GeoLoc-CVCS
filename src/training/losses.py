@@ -62,4 +62,4 @@ def compute_loss_weights(label_maps, coarse_label_idx):
 
         weights.append(len(cell_list)/sum_of_areas)
 
-    return torch.tensor(np.array(weights)/sum(weights), dtype=torch.float32, device=torch.device)
+    return torch.tensor(np.array(weights) / sum(weights), dtype=torch.float32)
