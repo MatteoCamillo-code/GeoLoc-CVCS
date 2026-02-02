@@ -16,14 +16,14 @@ class TrainConfig:
     delta_patience: float = 1e-3
     amp: bool = True
     device: str = "cuda"
-    model_name: str = "SH_osv_res_base_argmax_cbam_sem_1k_v0"
+    model_name: str = "SH_osv_res_weight_smooth03_cbam_sem_1k_v0"
     use_tqdm: bool = True
     dropout: float = 0.0
     use_cbam: bool = True
     cbam_reduction: int = 16
     
-    gps_method: str = "argmax"  # "weighted", "argmax"
-    label_smoothing: float = 0.0
+    gps_method: str = "weighted"  # "weighted", "argmax"
+    label_smoothing: float = 0.3
     
     backbone: str = "resnet50"  # backbone model name
     
