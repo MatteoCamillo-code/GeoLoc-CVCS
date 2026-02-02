@@ -19,7 +19,7 @@ class TrainConfig:
     model_name: str = "SH_osv_semantic"
     use_tqdm: bool = True
     dropout: float = 0.0
-    use_cbam: bool = False
+    use_cbam: bool = True
     cbam_reduction: int = 16
     
     gps_method: str = "argmax"  # "weighted", "argmax"
