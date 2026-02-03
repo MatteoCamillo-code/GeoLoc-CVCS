@@ -27,7 +27,6 @@ class OSV_mini(Dataset):
         scene="total",   # "urban" | "natural" | "total"
         label_maps=None,
         coarse_label_idx: list[int] = [0],
-        
     ):
         self.image_root = image_root
         self.transform = transform
@@ -36,10 +35,11 @@ class OSV_mini(Dataset):
         df = pd.read_csv(csv_path)
 
         # ---------------- SPLIT ----------------
-        if split == "train":
-            df = df[df["is_train"] == 1]
-        elif split == "val":
-            df = df[df["is_train"] == 0]
+        if "is_train" in df.columns:
+            if split == "train":
+                df = df[df["is_train"] == 1]
+            elif split == "val":
+                df = df[df["is_train"] == 0]
 
         # ---------------- SCENE ----------------
         if scene == "urban":
@@ -52,9 +52,17 @@ class OSV_mini(Dataset):
         df = df.reset_index(drop=True)
 
         # ---------------- IMAGES ----------------
-        regions = df["region"].astype(str).to_numpy()
         ids = df["id"].astype(str).to_numpy()
-        self.image_paths = [os.path.join(image_root, r, f"{i}.jpg") for r, i in zip(regions, ids)]
+
+        # If region column exists, keep old behavior
+        if "region" in df.columns:
+            regions = df["region"].astype(str).to_numpy()
+            self.image_paths = [os.path.join(image_root, r, f"{i}.jpg") for r, i in zip(regions, ids)]
+        else:
+            # New structure: /data/raw/<dataset>/<nested_id>.jpg
+            # Store root path for lazy resolution in __getitem__
+            self.image_root_resolved = os.path.abspath(image_root)
+            self.image_ids = ids  # Store IDs for lazy path resolution
 
         # ---------------- GPS ----------------
         # keep as numpy for smaller pickled dataset; convert per item
@@ -65,31 +73,47 @@ class OSV_mini(Dataset):
         self.label_maps = {} if label_maps is None else label_maps
 
         label_cols = [f"label_config_{idx + 1}" for idx in coarse_label_idx]
-        label_arrays = []
+        available_label_cols = [c for c in label_cols if c in df.columns]
 
-        for col in label_cols:
-            if label_maps is None:
-                # Build mapping (only do this ONCE, typically on train)
-                codes, uniques = pd.factorize(df[col])
-                self.label_maps[col] = uniques
-                label_arrays.append(codes.astype("int64"))
-            else:
-                # Reuse mapping
-                uniques = self.label_maps[col]
-                # Map df[col] onto the same category ordering as train
-                codes = pd.Categorical(df[col], categories=uniques).codes
-                # Unseen labels become -1
-                label_arrays.append(codes.astype("int64"))
+        if available_label_cols:
+            label_arrays = []
+            for col in available_label_cols:
+                if label_maps is None:
+                    # Build mapping (only do this ONCE, typically on train)
+                    codes, uniques = pd.factorize(df[col])
+                    self.label_maps[col] = uniques
+                    label_arrays.append(codes.astype("int64"))
+                else:
+                    # Reuse mapping
+                    uniques = self.label_maps[col]
+                    # Map df[col] onto the same category ordering as train
+                    codes = pd.Categorical(df[col], categories=uniques).codes
+                    # Unseen labels become -1
+                    label_arrays.append(codes.astype("int64"))
 
-        # shape: [N, 3]
-        self.labels = torch.from_numpy(np.stack(label_arrays, axis=1))  # long tensor
+            # shape: [N, K]
+            self.labels = torch.from_numpy(np.stack(label_arrays, axis=1))  # long tensor
+        else:
+            # Fallback when label columns are missing in the CSV
+            # Keep shape consistent with coarse_label_idx length
+            self.labels = torch.zeros((len(df), len(coarse_label_idx)), dtype=torch.long)
 
     def __len__(self):
-        return len(self.image_paths)
+        if hasattr(self, 'image_paths'):
+            return len(self.image_paths)
+        else:
+            return len(self.image_ids)
 
     def __getitem__(self, idx):
+        # Resolve image path
+        if hasattr(self, 'image_paths'):
+            img_path = self.image_paths[idx]
+        else:
+            # Lazy path resolution for new structure
+            img_path = self._resolve_image_path(idx)
+        
         # Load as PIL Image for compatibility with torchvision transforms
-        img = Image.open(self.image_paths[idx]).convert("RGB")
+        img = Image.open(img_path).convert("RGB")
         if self.transform:
             img = self.transform(img)
         # Convert to tensor if not already done by transform
@@ -98,6 +122,34 @@ class OSV_mini(Dataset):
         gps = torch.from_numpy(self.gps_np[idx])
         labels = self.labels[idx]
         return img, labels, gps
+    
+    def _resolve_image_path(self, idx):
+        """Resolve image path for new CSV structure with nested folders."""
+        img_id = self.image_ids[idx]
+        rel_path = f"{img_id}.jpg" if not img_id.endswith(".jpg") else img_id
+        
+        # Direct construction - if ID includes dataset folder, this just works
+        # Examples: "osv5m/123456" or "mp16_images/a6/e7/2734062435"
+        full_path = os.path.join(self.image_root_resolved, rel_path)
+        
+        # Fast path: if it exists directly, return it (works when dataset folder is in ID)
+        if os.path.exists(full_path):
+            return full_path
+        
+        # Fallback: search dataset subfolders (for backward compatibility)
+        # This is slower but handles cases where ID doesn't include the folder
+        try:
+            for entry in os.listdir(self.image_root_resolved):
+                subdir = os.path.join(self.image_root_resolved, entry)
+                if os.path.isdir(subdir):
+                    candidate = os.path.join(subdir, rel_path)
+                    if os.path.exists(candidate):
+                        return candidate
+        except (OSError, PermissionError):
+            pass
+        
+        # Return the direct path (will produce clear error message if image truly missing)
+        return full_path
 
 def seed_worker(worker_id: int):
     """

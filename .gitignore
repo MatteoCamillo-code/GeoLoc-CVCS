@@ -1,4 +1,5 @@
 data/raw/
+data/classify/
 data/interim/
 data/classify/
 data/processed/

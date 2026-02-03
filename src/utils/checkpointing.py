@@ -3,7 +3,7 @@ from typing import Optional
 import torch
 
 
-def save_checkpoint(path: str, model, optimizer=None, epoch: int = 0, extra: Optional[dict] = None):
+def save_checkpoint(path: str, model, labels_map=None, optimizer=None, epoch: int = 0, extra: Optional[dict] = None):
     """Persist model (and optional optimizer) state.
 
     path: destination file path for the checkpoint (directories are created).
@@ -14,6 +14,8 @@ def save_checkpoint(path: str, model, optimizer=None, epoch: int = 0, extra: Opt
     """
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     payload = {"epoch": epoch, "model": model.state_dict()}
+    if labels_map is not None:
+        payload["label_maps"] = labels_map
     if optimizer is not None:
         # e.g., momentum buffers, running averages
         payload["optimizer"] = optimizer.state_dict()
