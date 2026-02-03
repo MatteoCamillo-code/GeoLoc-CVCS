@@ -29,10 +29,16 @@ class Evaluator:
 
         if "image_name" not in results_df.columns:
             results_df["image_name"] = results_df["image_path"].apply(lambda x: Path(x).stem).astype(str)
+        
+        # Strip file extensions from results_df image names (e.g., "image.jpg" -> "image")
+        results_df["image_name"] = results_df["image_name"].apply(lambda x: Path(x).stem).astype(str)
         gt_df["image_name"] = gt_df["id"].astype(str)
 
+        # Merge with ground truth (inner join for matched images)
         merged = results_df.merge(
-            gt_df[["image_name", "latitude", "longitude"]],
+            gt_df[["image_name", "latitude", "longitude"]].rename(
+                columns={"latitude": "true_latitude", "longitude": "true_longitude"}
+            ),
             on="image_name",
             how="inner",
         )
@@ -40,13 +46,26 @@ class Evaluator:
         if merged.empty:
             return None
 
-        true_gps = torch.tensor(merged[["latitude", "longitude"]].values, dtype=torch.float32)
+        true_gps = torch.tensor(merged[["true_latitude", "true_longitude"]].values, dtype=torch.float32)
         pred_gps = torch.tensor(merged[["predicted_lat", "predicted_lon"]].values, dtype=torch.float32)
 
         distances_km = haversine_km(pred_gps, true_gps)
         merged["distance_km"] = distances_km.numpy()
 
         accuracy = geo_accuracy(distances_km, thresholds=(1, 25, 200, 750, 2500))
+
+        # Also add ground truth and distance info to original results_df
+        results_df = results_df.merge(
+            gt_df[["image_name", "latitude", "longitude"]].rename(
+                columns={"latitude": "true_latitude", "longitude": "true_longitude"}
+            ),
+            on="image_name",
+            how="left",
+        )
+        
+        # Add distance column (NaN for unmatched images)
+        distance_map = merged.set_index("image_name")["distance_km"].to_dict()
+        results_df["distance_km"] = results_df["image_name"].map(distance_map)
 
         return EvaluationResult(
             merged=merged,

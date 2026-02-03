@@ -70,5 +70,37 @@ class GeoLocPipeline:
             batch_size=self._config.inference_batch_size,
         )
 
-    def evaluate(self, results_df: pd.DataFrame) -> EvaluationResult | None:
-        return self._evaluator.evaluate(results_df, self._config.ground_truth_csv)
+    def evaluate(self, results_df: pd.DataFrame) -> tuple[EvaluationResult | None, pd.DataFrame]:
+        """Evaluate predictions and update results_df with ground truth and distances.
+        
+        Returns:
+            Tuple of (evaluation_result, updated_results_df)
+        """
+        eval_result = self._evaluator.evaluate(results_df, self._config.ground_truth_csv)
+        # The evaluator modifies results_df in place with true coords and distances
+        # We need to get the updated version
+        if eval_result is not None:
+            # Merge ground truth into results_df
+            gt_df = pd.read_csv(self._config.ground_truth_csv)
+            results_df = results_df.copy()
+            
+            if "image_name" not in results_df.columns:
+                results_df["image_name"] = results_df["image_path"].apply(lambda x: Path(x).stem).astype(str)
+            
+            # Strip file extensions from results_df image names (e.g., "image.jpg" -> "image")
+            results_df["image_name"] = results_df["image_name"].apply(lambda x: Path(x).stem).astype(str)
+            gt_df["image_name"] = gt_df["id"].astype(str)
+            
+            results_df = results_df.merge(
+                gt_df[["image_name", "latitude", "longitude"]].rename(
+                    columns={"latitude": "true_latitude", "longitude": "true_longitude"}
+                ),
+                on="image_name",
+                how="left",
+            )
+            
+            # Add distance column
+            distance_map = eval_result.merged.set_index("image_name")["distance_km"].to_dict()
+            results_df["distance_km"] = results_df["image_name"].map(distance_map)
+        
+        return eval_result, results_df
