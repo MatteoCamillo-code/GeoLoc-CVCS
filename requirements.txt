@@ -1,1 +1,9 @@
 s2sphere
+torch
+numpy
+pandas
+matplotlib
+tqdm
+torchvision
+timm
+kagglehub
