@@ -1,5 +1,6 @@
 data/raw/
 data/interim/
+data/classify/
 data/processed/
 outputs/checkpoints/
 **/__pycache__/
