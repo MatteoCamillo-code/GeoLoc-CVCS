@@ -64,7 +64,7 @@ def fit(cfg, model, data_loader, cell_centers, cells_hierarchy,
         # save best
         if va["acc"] >= es.best:
             save_checkpoint(
-                ckpt_path, model, optimizer, epoch,
+                ckpt_path, model, labels_map_dict, optimizer, epoch,
                 extra={"cfg": asdict(cfg), "best_val_acc": va["acc"]}
             )
 

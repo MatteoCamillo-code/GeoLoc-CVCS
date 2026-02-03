@@ -11,7 +11,7 @@ class TrainConfig:
     weight_decay: float = 1e-4
     scheduler_step_size: int = 5
     scheduler_gamma: float = 0.3
-    max_epochs: int = 15
+    max_epochs: int = 1
     patience: int = 5
     delta_patience: float = 1e-3
     amp: bool = True
@@ -32,8 +32,8 @@ class TrainConfig:
     same_partitions: bool = True  # whether to use same partitions for all coarse labels
     coarse_label_idx: list[int] = field(default_factory=lambda: [0, 1, 2])  # indices of the labels to be used for multi-head classification
     
-    train_size_pct: float = 100.0 
-    val_size_pct: float = 100.0    
+    train_size_pct: float = 30.0 
+    val_size_pct: float = 30.0    
     
 
     # IMPORTANT: relative-to-root output folder name

@@ -599,3 +599,13 @@
 [20:06:58] INFO - Epoch 8/15 | train loss=6.2711 acc=18.50% | val loss=6.9804 acc=13.24% | geo acc={'acc@1km': '5.65%', 'acc@5km': '16.62%', 'acc@25km': '27.73%', 'acc@100km': '35.23%'} | time=810.2s
 [20:20:28] INFO - Epoch 9/15 | train loss=6.2600 acc=18.66% | val loss=6.9800 acc=13.22% | geo acc={'acc@1km': '5.63%', 'acc@5km': '16.54%', 'acc@25km': '27.59%', 'acc@100km': '35.11%'} | time=810.0s
 [23:37:21] INFO - Epoch 10/15 | train loss=6.2572 acc=18.70% | val loss=6.9787 acc=13.30% | geo acc={'acc@1km': '5.67%', 'acc@5km': '16.49%', 'acc@25km': '27.47%', 'acc@100km': '35.05%'} | time=11812.9s
+[02:03:37] INFO - Starting training MH_res_cbam_wd_sp_mp16 for scene total ...
+[02:10:22] INFO - Epoch 1/15 | train loss=7.6111 acc=10.00% | val loss=7.0142 acc=17.40% | geo acc={'acc@1km': '7.54%', 'acc@5km': '21.96%', 'acc@25km': '36.36%', 'acc@100km': '45.58%'} | time=404.3s
+[02:16:34] INFO - Epoch 2/15 | train loss=6.4192 acc=26.71% | val loss=6.6978 acc=23.49% | geo acc={'acc@1km': '10.04%', 'acc@5km': '28.66%', 'acc@25km': '44.37%', 'acc@100km': '52.43%'} | time=371.8s
+[02:22:46] INFO - Epoch 3/15 | train loss=5.9250 acc=36.19% | val loss=6.5485 acc=27.03% | geo acc={'acc@1km': '11.40%', 'acc@5km': '32.19%', 'acc@25km': '48.26%', 'acc@100km': '56.12%'} | time=371.7s
+[02:22:51] INFO - Saved consolidated checkpoints
+[02:52:05] INFO - Starting training MH_res_cbam_wd_sp_mp16 for scene total ...
+[02:54:32] INFO - Epoch 1/1 | train loss=8.2697 acc=2.42% | val loss=7.9113 acc=6.19% | geo acc={'acc@1km': '2.49%', 'acc@5km': '8.53%', 'acc@25km': '17.19%', 'acc@100km': '25.35%'} | time=146.8s
+[02:54:32] INFO - Training completed.
+[02:55:21] INFO - Saved consolidated checkpoints
+[02:55:22] INFO - Deleted
