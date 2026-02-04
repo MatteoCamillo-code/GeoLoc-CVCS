@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Optional
 
 import pandas as pd
 import torch
@@ -20,7 +21,7 @@ class EvaluationResult:
 
 
 class Evaluator:
-    def evaluate(self, results_df: pd.DataFrame, ground_truth_csv: Path | None) -> EvaluationResult | None:
+    def evaluate(self, results_df: pd.DataFrame, ground_truth_csv: Optional[Path]) -> Optional[EvaluationResult]:
 
         if ground_truth_csv is None or not ground_truth_csv.exists():
             return None
@@ -56,7 +57,6 @@ class Evaluator:
 
         accuracy = geo_accuracy(distances_km, thresholds=(1, 5, 25, 100))
 
-        # Also add ground truth and distance info to original results_df
         results_df = results_df.merge(
             gt_df[["image_name", "latitude", "longitude"]].rename(
                 columns={"latitude": "true_latitude", "longitude": "true_longitude"}
@@ -64,8 +64,7 @@ class Evaluator:
             on="image_name",
             how="left",
         )
-        
-        # Add distance column (NaN for unmatched images)
+
         distance_map = merged.set_index("image_name")["distance_km"].to_dict()
         results_df["distance_km"] = results_df["image_name"].map(distance_map)
 

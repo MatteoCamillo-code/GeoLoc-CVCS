@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Optional
 
 import pandas as pd
 import torch
@@ -75,7 +76,7 @@ class ModelLoader:
         return backbone, feat_dim
 
     def _load_label_maps(self, checkpoint: dict, scene: str, coarse_label_idx: list[int],
-                         image_root_train: Path, train_val_csv: Path | None) -> dict:
+                         image_root_train: Path, train_val_csv: Optional[Path]) -> dict:
         print(f"Loading label maps for scene '{scene}'...")
         if scene in checkpoint and "label_maps" in checkpoint[scene]:
             return checkpoint[scene]["label_maps"]
@@ -113,7 +114,7 @@ class ModelLoader:
         dropout: float,
         coarse_label_idx: list[int],
         image_root_train: Path,
-        train_val_csv: Path | None,
+        train_val_csv: Optional[Path],
         expanded_dataset: bool = False,
     ) -> ModelBundle:
         models: dict[str, torch.nn.Module] = {}

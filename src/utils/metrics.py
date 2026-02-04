@@ -11,7 +11,7 @@ def compute_history_val_acc_from_history(cfg, loader_dict, project_root):
         scene_accs[scene] = np.asarray(history["val_acc"], dtype=float)  # (E,)
         scene_sizes[scene] = len(loader_dict[scene]["val_loader"].dataset)
 
-    # choose number of epochs to aggregate (safe if some runs are shorter)
+    # choose number of epochs to aggregate
     E = min(a.shape[0] for a in scene_accs.values())
 
     total_size = sum(scene_sizes.values())

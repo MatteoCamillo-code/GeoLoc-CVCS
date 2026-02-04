@@ -75,6 +75,10 @@ def create_dataloaders(
         Number of batches to prefetch per worker.
     persistent_workers : bool, default=True
         Whether to keep workers alive between epochs.
+    coarse_label_idx : list[int], default=[0]
+        List of coarse label indices to use.
+    shuffle_val : bool, default=False
+        Whether to shuffle the validation DataLoader.
 
     Returns
     -------

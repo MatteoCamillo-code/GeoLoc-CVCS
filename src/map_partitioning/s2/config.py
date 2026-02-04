@@ -5,8 +5,7 @@ class S2Config:
     
     def __init__(self, project_root: Path = None):
         # --- File Paths ---
-        # We define the project root relative to this file's location
-        # Path(__file__) refers to config.py
+
         if project_root is None:
             return
         

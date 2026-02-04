@@ -1,8 +1,6 @@
 import torch
 
 def to_device(batch, device):
-    # dataset.osv_dataset.OSV_mini returns: (image, labels, gps)
-    # labels shape: [B, 3] for 3 label configs
     x, labels, gps = batch
     return x.to(device, non_blocking=True), labels.to(device, non_blocking=True), gps.to(device, non_blocking=True) if gps is not None else None
 

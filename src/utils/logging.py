@@ -5,7 +5,7 @@ from typing import Optional
 def get_logger(name: str = "geoloc", log_file: Optional[str] = None) -> logging.Logger:
     logger = logging.getLogger(name)
     if logger.handlers:
-        return logger  # already configured
+        return logger
 
     logger.setLevel(logging.INFO)
     fmt = logging.Formatter("[%(asctime)s] %(levelname)s - %(message)s", "%H:%M:%S")

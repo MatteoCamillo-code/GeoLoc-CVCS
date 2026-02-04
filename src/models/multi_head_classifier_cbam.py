@@ -42,8 +42,7 @@ class MultiHeadClassifier(nn.Module):
         # timm features_only returns a list
         if isinstance(feats, (list, tuple)):
             feats = feats[0]
-
-        # feats: [B, C, H, W]
+            
         if self.use_cbam:
             feats = self.cbam(feats)
 

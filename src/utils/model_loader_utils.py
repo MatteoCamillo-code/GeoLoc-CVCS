@@ -83,7 +83,6 @@ def print_samples(val_samples):
     for idx, (scene, samples) in enumerate(val_samples.items()):
         if samples:
             img = samples[0]['image']
-            # Denormalize if needed (assuming images are in [0, 1] range)
             if img.max() <= 1.0:
                 img = img
             else:
@@ -100,7 +99,7 @@ def print_samples(val_samples):
     return plt, text
 
 
-# LOAD MODELS FROM CONSOLIDATED CHECKPOINT
+# LOAD MODELS
 
 from src.utils.checkpointing import load_checkpoint
 
@@ -242,7 +241,7 @@ def predict_samples(models, val_samples, loader_dict, cell_centers_dfs, cells_hi
         with torch.no_grad():
             for i, sample in enumerate(samples):
                 # Prepare input
-                image = sample['image'].unsqueeze(0).to(device)  # Add batch dimension
+                image = sample['image'].unsqueeze(0).to(device)
                 
                 # Get prediction
                 outputs = model(image)  # Returns list of logits for each head
@@ -271,18 +270,18 @@ def predict_samples(models, val_samples, loader_dict, cell_centers_dfs, cells_hi
                 for head_idx, true_idx in enumerate(true_labels):
                     label_config_name = f"label_config_{cfg.coarse_label_idx[head_idx] + 1}"
                     label_map = label_maps[label_config_name]
-                    if true_idx >= 0:  # Check if not a missing label (-1)
+                    if true_idx >= 0:
                         true_label_names.append(label_map[true_idx])
                     else:
                         true_label_names.append("Unknown")
                 
-                # Predict GPS coordinates using hierarchical method
                 if gps_method == "weighted":
+                    # Predict GPS coordinates using hierarchical method
                     predicted_gps = get_weighted_predicted_gps(
                         outputs, cells_hierarchy, label_maps, top_k, device
                     )
                 else:
-                    # Use argmax method (first head only)
+                    # Use argmax method
                     predicted_class_indices = outputs[0].argmax(dim=1).cpu().numpy()
                     predicted_s2_cells = label_maps.get("label_config_1")[predicted_class_indices]
                     predicted_latlons_df = cell_centers.loc[predicted_s2_cells, ['center_latitude', 'center_longitude']]

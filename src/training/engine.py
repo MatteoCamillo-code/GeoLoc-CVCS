@@ -97,8 +97,8 @@ def evaluate(
         true_gps.append(gps)
         
         bs = x.size(0)
-        total_loss = utils.update_running_metric(total_loss, loss, bs)  # tensor, stays on GPU
-        total_acc = utils.update_running_metric(total_acc, acc, bs)      # make sure acc is a tensor
+        total_loss = utils.update_running_metric(total_loss, loss, bs)
+        total_acc = utils.update_running_metric(total_acc, acc, bs)
         n += bs
 
         if use_tqdm and (step % 40 == 0):
@@ -107,7 +107,7 @@ def evaluate(
                 acc=f"{(acc.detach().float().item()*100):.2f}%",
             )
     
-    # Concatenate all batches (still on GPU)
+    # Concatenate all batches
     predicted_gps = torch.cat(predicted_gps, dim=0)
     true_gps = torch.cat(true_gps, dim=0)
     

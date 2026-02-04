@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Optional
 
 import pandas as pd
 import torch
@@ -72,7 +73,7 @@ class GeoLocPipeline:
             batch_size=self._config.inference_batch_size,
         )
 
-    def evaluate(self, results_df: pd.DataFrame) -> tuple[EvaluationResult | None, pd.DataFrame]:
+    def evaluate(self, results_df: pd.DataFrame) -> tuple[Optional[EvaluationResult], pd.DataFrame]:
         """Evaluate predictions and update results_df with ground truth and distances.
         
         Returns:
@@ -80,8 +81,6 @@ class GeoLocPipeline:
         """
         
         eval_result = self._evaluator.evaluate(results_df, self._config.ground_truth_csv)
-        # The evaluator modifies results_df in place with true coords and distances
-        # We need to get the updated version
         if eval_result is not None:
             # Merge ground truth into results_df
             gt_df = pd.read_csv(self._config.ground_truth_csv)
@@ -91,7 +90,7 @@ class GeoLocPipeline:
                 results_df["image_name"] = results_df["image_path"].apply(lambda x: Path(x).stem).astype(str)
             
             # Strip file extensions from results_df image names (e.g., "image.jpg" -> "image")
-            # Only apply Path().stem if the value is a string; otherwise convert to string as-is
+            # Only apply Path().stem if the value is a string; otherwise convert to string
             results_df["image_name"] = results_df["image_name"].apply(
                 lambda x: Path(str(x)).stem if isinstance(x, str) and '.' in str(x) else str(x)
             )

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Optional
 
 
 @dataclass(frozen=True)
@@ -16,20 +16,20 @@ class PipelineConfig:
     expanded_dataset: bool = False  # whether to use expanded metadata files (with _expanded suffix)
 
     # I/O
-    image_root: Path | None = None
-    ground_truth_csv: Path | None = None
-    train_image_root: Path | None = None
-    train_val_csv: Path | None = None
+    image_root: Optional[Path] = None
+    ground_truth_csv: Optional[Path] = None
+    train_image_root: Optional[Path] = None
+    train_val_csv: Optional[Path] = None
 
     # Runtime
-    device: str | None = None
+    device: Optional[str] = None
     classify_batch_size: int = 32
     inference_batch_size: int = 32
     confidence_threshold: float = 0.0
     top_k: int = 5
     weighted_distance: bool = True
     
-    def resolve_path(self, path: Path | None) -> Path | None:
+    def resolve_path(self, path: Optional[Path]) -> Optional[Path]:
         return path.resolve() if path is not None else None
 
     def resolve_paths(self) -> "PipelineConfig":

@@ -22,11 +22,11 @@ class MultiHeadClassifier(nn.Module):
             param.requires_grad = False
             
     def forward(self, x):
-        # backbone should output a feature vector [B, feat_dim]
+        # backbone should output a feature vector
         feats = self.backbone(x)
         if self.dropout is not None:
             feats = self.dropout(feats)
-        logits = [head(feats) for head in self.heads]   # list of [B, Ci]
+        logits = [head(feats) for head in self.heads]
         return logits
 
     def get_coarse_level_logits(self, x):

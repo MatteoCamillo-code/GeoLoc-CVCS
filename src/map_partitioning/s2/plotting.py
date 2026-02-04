@@ -53,7 +53,6 @@ def plot_s2_cell_maps_trio(configs, trained_partitions, df_train, world_map, sav
     Optional: Saves the combined plot as a PNG.
     """
     fig, axes = plt.subplots(1, len(configs), figsize=(20, 10))
-    # Handle single configuration case where axes is not a list
     if len(configs) == 1: 
         axes = [axes]
 
@@ -79,7 +78,6 @@ def plot_s2_cell_maps_trio(configs, trained_partitions, df_train, world_map, sav
     # Saving logic
     if save_images:
         if output_dir is None:
-            # Default directory if none provided
             output_dir = "tbd"
         
         os.makedirs(output_dir, exist_ok=True)

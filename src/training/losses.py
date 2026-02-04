@@ -14,11 +14,9 @@ class CrossEntropyWithLabelSmoothing(nn.Module):
         self.ignore_index = int(ignore_index)
 
     def forward(self, logits: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
-        # logits: [B,C], target: [B]
         if self.smoothing <= 0.0:
             return F.cross_entropy(logits, target, ignore_index=self.ignore_index)
 
-        # Handle ignore_index by masking first
         mask = target != self.ignore_index
         if mask.sum() == 0:
             return torch.tensor(0.0, device=logits.device, dtype=logits.dtype)
@@ -52,7 +50,7 @@ def compute_loss_weights(label_maps, coarse_label_idx):
 
         for cell in cell_list:
 
-          cell_id = s2.CellId.from_token(cell)  # example
+          cell_id = s2.CellId.from_token(cell)
           cell = s2.Cell(cell_id)
 
           area_m2 = cell.exact_area()

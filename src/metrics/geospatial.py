@@ -29,7 +29,6 @@ def geo_accuracy(dist_km: torch.Tensor, thresholds=(1,5,25,100)) -> dict:
 
 def get_predicted_gps(predicted_class_indices, cell_centers, labels_map, device):
     # TODO: generalize for any level
-    # Move tensor to CPU for pandas indexing
     if isinstance(predicted_class_indices, torch.Tensor):
         predicted_class_indices = predicted_class_indices.cpu().numpy()
     
@@ -49,7 +48,6 @@ def get_weighted_predicted_gps(logits, cells_hierarchy, labels_map, top_k, devic
     if num_paths == 0:
         return torch.zeros((batch_size, 2), dtype=torch.float32, device=device)
     
-    # Pre-compute once outside loop
     class_indices = utils.precompute_class_indices(cells_hierarchy, labels_map, num_levels, device)
     coord_x, coord_y, coord_z, coord_points = utils.preload_coordinates(cells_hierarchy, device)
     
@@ -73,6 +71,6 @@ def get_weighted_predicted_gps(logits, cells_hierarchy, labels_map, top_k, devic
         else:
             predicted_latlons.append(gps)
             
-    # Convert to tensor [B, 2] on device
+    # Convert to tensor
     predicted_gps = torch.tensor(predicted_latlons, dtype=torch.float32, device=device)
     return predicted_gps

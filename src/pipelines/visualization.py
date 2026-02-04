@@ -34,10 +34,10 @@ def show_sample_images(results_df: pd.DataFrame, image_root: Path, n_samples: in
     if n_samples == 0:
         return
 
-    # Map image names (without extension) to file paths
+    # Map image names to file paths
     name_to_path = {}
     for img_path in image_root.glob("**/*.jpg"):
-        stem = img_path.stem  # filename without extension
+        stem = img_path.stem
         if stem not in name_to_path:
             name_to_path[stem] = img_path
 

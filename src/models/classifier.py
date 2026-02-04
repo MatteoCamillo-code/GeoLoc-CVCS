@@ -36,7 +36,7 @@ class SceneClassifierWithConfidence(torch.nn.Module):
             content = csv.reader(csvfile, delimiter=',')
             next(content); next(content)  # Skip header rows
             for line in content:
-                # Handle rows with missing values - only process if we have at least 4 columns
+                # Handle rows with missing values, only process if we have at least 4 columns
                 if len(line) >= 4:
                     try:
                         # Extract columns 1-3 (indices 1, 2, 3) and convert to float

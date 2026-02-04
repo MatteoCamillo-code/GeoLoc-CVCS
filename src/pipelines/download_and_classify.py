@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Optional
 
 import pandas as pd
 import requests
@@ -20,7 +20,7 @@ class DatasetConfig:
     input_metadata: Path
     output_dir: Path
     output_csv: Path
-    confidence_threshold: float | None = None  # If None, uses default from DownloadAndClassifyConfig
+    confidence_threshold: Optional[float] = None
 
 
 @dataclass(frozen=True)
@@ -28,9 +28,9 @@ class DownloadAndClassifyConfig:
     confidence_threshold: float = 0.7
     max_retries: int = 2
     timeout: int = 5
-    batch_size: int = 128  # Increased for better GPU utilization
+    batch_size: int = 128 
     num_download_threads: int = 16
-    test_limit: int | None = None
+    test_limit: Optional[int] = None
 
 
 @dataclass
@@ -111,7 +111,7 @@ def update_osv_mini_config(
     return dataset_configs
 
 
-def download_image_from_url(url: str, max_retries: int, timeout: int) -> Image.Image | None:
+def download_image_from_url(url: str, max_retries: int, timeout: int) -> Optional[Image.Image]:
     for attempt in range(max_retries):
         try:
             response = requests.get(url, timeout=timeout, stream=True)
@@ -215,7 +215,7 @@ def download_images_for_dataset(
         
         img_path = next((p for p in possible_paths if p.exists() and p.is_file()), None)
         
-        # If not found in direct paths, use filename lookup (fast O(1) lookup)
+        # If not found in direct paths, use filename lookup
         if not img_path:
             search_name = img_id if img_id.endswith(".jpg") else f"{img_id}.jpg"
             img_path = filename_to_path.get(search_name)
@@ -262,7 +262,7 @@ def classify_downloaded_images(
     downloaded_data: list[dict],
     classifier: SceneClassifierWithConfidence,
     config: DownloadAndClassifyConfig,
-    threshold: float | None = None,
+    threshold: Optional[float] = None,
 ) -> tuple[list[dict], list[dict], list[dict]]:
     results: list[dict] = []
     low_confidence: list[dict] = []
@@ -308,7 +308,6 @@ def classify_downloaded_images(
                 )
                 continue
 
-            # Handle both 'url' and 'thumb_original_url' column names
             url = row.get("url") or row.get("thumb_original_url", "")
             
             results.append(
