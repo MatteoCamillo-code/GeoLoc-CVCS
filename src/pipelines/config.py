@@ -12,7 +12,7 @@ class PipelineConfig:
     use_cbam: bool = True
     cbam_reduction: int = 16
     dropout: float = 0.0
-    coarse_label_idx: list[int] = field(default_factory=lambda: [0,1,2])
+    coarse_label_idx: list[int] = field(default_factory=lambda: [0,])
     expanded_dataset: bool = False  # whether to use expanded metadata files (with _expanded suffix)
 
     # I/O
