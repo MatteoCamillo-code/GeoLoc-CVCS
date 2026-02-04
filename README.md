@@ -173,10 +173,11 @@ Configuration files in the `configs/` folder use Python dataclasses to define al
 
 ### How to Use Configs
 
-Import the desired configuration in your notebook or script:
+Import the desired configuration in the training notebook:
 
 ```python
 from configs.desired_config_file import TrainConfig
+cfg = TrainConfig()
 ```
 
 You can also create custom configurations by copying and modifying existing config files.

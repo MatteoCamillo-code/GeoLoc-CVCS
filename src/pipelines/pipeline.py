@@ -27,6 +27,7 @@ class GeoLocPipeline:
             device=self._device,
             image_size=224,
             top_k=self._config.top_k,
+            weighted_distance=self._config.weighted_distance,
         )
         self._evaluator = Evaluator()
 
@@ -58,6 +59,7 @@ class GeoLocPipeline:
             coarse_label_idx=self._config.coarse_label_idx,
             image_root_train=train_image_root,
             train_val_csv=self._config.train_val_csv,
+            expanded_dataset=self._config.expanded_dataset,
         )
 
     def predict_gps(self, classified: dict[str, list[ClassifiedImage]], bundle: ModelBundle) -> pd.DataFrame:
@@ -76,6 +78,7 @@ class GeoLocPipeline:
         Returns:
             Tuple of (evaluation_result, updated_results_df)
         """
+        
         eval_result = self._evaluator.evaluate(results_df, self._config.ground_truth_csv)
         # The evaluator modifies results_df in place with true coords and distances
         # We need to get the updated version
@@ -88,7 +91,10 @@ class GeoLocPipeline:
                 results_df["image_name"] = results_df["image_path"].apply(lambda x: Path(x).stem).astype(str)
             
             # Strip file extensions from results_df image names (e.g., "image.jpg" -> "image")
-            results_df["image_name"] = results_df["image_name"].apply(lambda x: Path(x).stem).astype(str)
+            # Only apply Path().stem if the value is a string; otherwise convert to string as-is
+            results_df["image_name"] = results_df["image_name"].apply(
+                lambda x: Path(str(x)).stem if isinstance(x, str) and '.' in str(x) else str(x)
+            )
             gt_df["image_name"] = gt_df["id"].astype(str)
             
             results_df = results_df.merge(

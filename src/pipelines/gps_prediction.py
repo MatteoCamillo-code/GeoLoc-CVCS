@@ -9,7 +9,7 @@ from PIL import Image
 from torchvision import transforms
 from tqdm import tqdm
 
-from metrics.geospatial import get_weighted_predicted_gps
+from metrics.geospatial import get_predicted_gps, get_weighted_predicted_gps
 from .image_classification import ClassifiedImage
 from .model_loading import ModelBundle
 
@@ -24,25 +24,39 @@ class PredictionRow:
 
 
 class GPSPredictor:
-    def __init__(self, device: torch.device, image_size: int = 224, top_k: int = 5):
+    def __init__(self, device: torch.device, image_size: int = 224, top_k: int = 5, weighted_distance: bool = False):
         self._device = device
         self._top_k = top_k
+        self._weighted_distance = weighted_distance
         self._transform = transforms.Compose([
             transforms.Resize((image_size, image_size)),
             transforms.ToTensor(),
         ])
 
     def _predict_batch(self, model: torch.nn.Module, batch_images: list[torch.Tensor],
-                       label_maps: dict, cells_hierarchy, top_k: int) -> torch.Tensor:
+                       label_maps: dict, cells_hierarchy, cell_centers, top_k: int, weighted_distance: bool) -> torch.Tensor:
         batch_tensor = torch.stack(batch_images).to(self._device)
         logits = model(batch_tensor)
-        return get_weighted_predicted_gps(
-            logits=logits,
-            cells_hierarchy=cells_hierarchy,
+        # Model returns a list of logits (one per hierarchy level)
+        if isinstance(logits, list):
+            if weighted_distance:
+                return get_weighted_predicted_gps(
+                    logits=logits,
+                    cells_hierarchy=cells_hierarchy,
+                    labels_map=label_maps,
+                    top_k=top_k,
+                    device=self._device,
+                )
+            # Use the first level (coarsest) for non-weighted predictions
+            logits = logits[0]
+        
+        return get_predicted_gps(
+            predicted_class_indices=torch.argmax(logits, dim=1),
+            cell_centers=cell_centers,
             labels_map=label_maps,
-            top_k=top_k,
             device=self._device,
         )
+            
 
     def predict(self, classified: dict[str, list[ClassifiedImage]], bundle: ModelBundle,
                 image_root: Path, batch_size: int = 32) -> pd.DataFrame:
@@ -57,7 +71,9 @@ class GPSPredictor:
             scenes_to_process = {
                 scene_key: classified.get("urban", []) + classified.get("natural", [])
             }
-
+        
+        
+        
         rows: list[PredictionRow] = []
         name_to_path: dict[str, Path] = {}
         for img_path in image_root.glob("**/*.jpg"):
@@ -71,6 +87,7 @@ class GPSPredictor:
             model = bundle.models[scene]
             label_maps = bundle.label_maps[scene]
             cells_hierarchy = bundle.cells_hierarchy[scene]
+            cell_centers = bundle.cell_centers[scene]
 
             for i in tqdm(range(0, len(images), batch_size), desc=f"Predicting GPS ({scene})"):
                 batch_items = images[i:i + batch_size]
@@ -96,7 +113,9 @@ class GPSPredictor:
                     batch_images=batch_images,
                     label_maps=label_maps,
                     cells_hierarchy=cells_hierarchy,
+                    cell_centers=cell_centers,
                     top_k=self._top_k,
+                    weighted_distance=self._weighted_distance,
                 )
 
                 for j, (item, img_path) in enumerate(valid_items):

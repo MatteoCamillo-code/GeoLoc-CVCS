@@ -11,8 +11,9 @@ class PipelineConfig:
     backbone: str = "resnet50"  # "resnet50" | "inceptionv4"
     use_cbam: bool = True
     cbam_reduction: int = 16
-    dropout: float = 0.1
-    coarse_label_idx: list[int] = field(default_factory=lambda: [0, 1, 2])
+    dropout: float = 0.0
+    coarse_label_idx: list[int] = field(default_factory=lambda: [0,1,2])
+    expanded_dataset: bool = False  # whether to use expanded metadata files (with _expanded suffix)
 
     # I/O
     image_root: Path | None = None
@@ -26,7 +27,8 @@ class PipelineConfig:
     inference_batch_size: int = 32
     confidence_threshold: float = 0.0
     top_k: int = 5
-
+    weighted_distance: bool = True
+    
     def resolve_path(self, path: Path | None) -> Path | None:
         return path.resolve() if path is not None else None
 
@@ -47,4 +49,6 @@ class PipelineConfig:
             inference_batch_size=self.inference_batch_size,
             confidence_threshold=self.confidence_threshold,
             top_k=self.top_k,
+            weighted_distance=self.weighted_distance,
+            expanded_dataset=self.expanded_dataset,
         )

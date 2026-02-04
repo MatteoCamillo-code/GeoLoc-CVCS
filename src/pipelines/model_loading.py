@@ -76,11 +76,13 @@ class ModelLoader:
 
     def _load_label_maps(self, checkpoint: dict, scene: str, coarse_label_idx: list[int],
                          image_root_train: Path, train_val_csv: Path | None) -> dict:
+        print(f"Loading label maps for scene '{scene}'...")
         if scene in checkpoint and "label_maps" in checkpoint[scene]:
             return checkpoint[scene]["label_maps"]
         if "label_maps" in checkpoint:
             return checkpoint["label_maps"]
 
+        print(f"Loading label maps for scene '{scene}' from training data...")
         csv_path = train_val_csv
         if csv_path is None or not csv_path.exists():
             csv_path = self._data_dir / "metadata" / "s2-geo-cells" / f"train_val_split_geocells_{scene}.csv"
@@ -112,6 +114,7 @@ class ModelLoader:
         coarse_label_idx: list[int],
         image_root_train: Path,
         train_val_csv: Path | None,
+        expanded_dataset: bool = False,
     ) -> ModelBundle:
         models: dict[str, torch.nn.Module] = {}
         label_maps: dict[str, dict] = {}
@@ -119,8 +122,8 @@ class ModelLoader:
         cells_hierarchy: dict[str, pd.DataFrame] = {}
 
         for scene in available_scenes:
-            centers_path = self._data_dir / "metadata" / "s2-geo-cells" / f"cell_center_dataset_{scene}.csv"
-            hierarchy_path = self._data_dir / "metadata" / "s2-geo-cells" / f"cell_hierarchy_dataset_{scene}.csv"
+            centers_path = self._data_dir / "metadata" / "s2-geo-cells" / f"cell_center_dataset_{scene}{'_expanded' if expanded_dataset else ''}.csv"
+            hierarchy_path = self._data_dir / "metadata" / "s2-geo-cells" / f"cell_hierarchy_dataset_{scene}{'_expanded' if expanded_dataset else ''}.csv"
             cell_centers[scene] = pd.read_csv(centers_path, index_col=0)
             cells_hierarchy[scene] = pd.read_csv(hierarchy_path)
 

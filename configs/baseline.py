@@ -6,11 +6,11 @@ class TrainConfig:
     batch_size: int = 128
     num_workers: int = 6
     prefetch_factor: int = 4
-    lr: float = 5e-4
+    lr: float = 1e-3
     momentum: float = 0.9
     weight_decay: float = 1e-4
     scheduler_step_size: int = 5
-    scheduler_gamma: float = 0.5
+    scheduler_gamma: float = 0.9
     max_epochs: int = 15
     patience: int = 5
     delta_patience: float = 1e-3
@@ -18,11 +18,14 @@ class TrainConfig:
     device: str = "cuda"
     model_name: str = "res_cbam_wd_sp"
     use_tqdm: bool = True
-    dropout: float = 0.1
+    dropout: float = 0.0
     use_cbam: bool = True
     cbam_reduction: int = 16
     
+    expanded_dataset: bool = False  # whether to use expanded metadata files (with _expanded suffix)
+    
     gps_method: str = "weighted"  # "weighted", "argmax"
+    weighted_loss: bool = True
     label_smoothing: float = 0.3
     
     backbone: str = "resnet50"  # backbone model name

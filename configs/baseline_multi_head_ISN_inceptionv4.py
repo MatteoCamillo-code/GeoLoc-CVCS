@@ -25,6 +25,7 @@ class TrainConfig:
     label_smoothing: float = 0.2
     
     gps_method: str = "weighted"  # "weighted", "argmax"
+    weighted_loss: bool = True
     
     backbone: str = "inceptionv4"  # backbone model name
     image_size: int = 299  # input image size for the model
@@ -32,6 +33,8 @@ class TrainConfig:
     scenes: list[str] = field(default_factory=lambda: ["total"])  # scenes to be used for ISN classification
     same_partitions: bool = True  # whether to use same partitions for all coarse labels
     coarse_label_idx: list[int] = field(default_factory=lambda: [0, 1, 2])  # indices of the labels to be used for multi-head classification
+    
+    expanded_dataset: bool = False  # whether to use expanded metadata files (with _expanded suffix)
     
     train_size_pct: float = 100.0 
     val_size_pct: float = 100.0

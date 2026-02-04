@@ -21,6 +21,7 @@ class EvaluationResult:
 
 class Evaluator:
     def evaluate(self, results_df: pd.DataFrame, ground_truth_csv: Path | None) -> EvaluationResult | None:
+
         if ground_truth_csv is None or not ground_truth_csv.exists():
             return None
 
@@ -44,6 +45,7 @@ class Evaluator:
         )
 
         if merged.empty:
+            print("No matching images found between results and ground truth for evaluation.")
             return None
 
         true_gps = torch.tensor(merged[["true_latitude", "true_longitude"]].values, dtype=torch.float32)
@@ -52,7 +54,7 @@ class Evaluator:
         distances_km = haversine_km(pred_gps, true_gps)
         merged["distance_km"] = distances_km.numpy()
 
-        accuracy = geo_accuracy(distances_km, thresholds=(1, 25, 200, 750, 2500))
+        accuracy = geo_accuracy(distances_km, thresholds=(1, 5, 25, 100))
 
         # Also add ground truth and distance info to original results_df
         results_df = results_df.merge(

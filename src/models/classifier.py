@@ -17,6 +17,11 @@ class SceneClassifierWithConfidence(torch.nn.Module):
         
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"Using Device: {self.device}")
+        if self.device.type == "cuda":
+            torch.backends.cudnn.benchmark = True
+            self.use_amp = True
+        else:
+            self.use_amp = False
         
         # Download required files
         if not os.path.exists(scene_hierarchy_file):
@@ -45,6 +50,7 @@ class SceneClassifierWithConfidence(torch.nn.Module):
         sum_rows = np.sum(hierarchy_places3, axis=1)
         sum_rows[sum_rows == 0] = 1.0
         self.hierarchy_places3 = hierarchy_places3 / np.expand_dims(sum_rows, axis=-1)
+        self._hierarchy_places3_gpu = torch.from_numpy(self.hierarchy_places3).float().to(self.device)
         
         # Load model
         print(f'Loading {model_name}...')
@@ -68,20 +74,25 @@ class SceneClassifierWithConfidence(torch.nn.Module):
     
     def process_images(self, pil_images):
         """Process PIL images and return predictions with confidence."""
-        batch = [self.transform(img) for img in pil_images]
-        batch = torch.stack(batch).to(self.device)
+        # Transform and stack on GPU directly
+        batch = torch.stack([self.transform(img) for img in pil_images]).to(self.device, non_blocking=True)
         return self(batch)
     
     def forward(self, batch):
         """Returns (labels, confidences) instead of just labels."""
         with torch.inference_mode():
-            logits = self.model(batch)
-            scene_probs = F.softmax(logits, dim=1).cpu().numpy()
-            places_probs = np.matmul(scene_probs, self.hierarchy_places3)
-            
-            # Get both the predicted label AND its confidence
-            scene_label_int = np.argmax(places_probs, axis=1)
-            confidence = np.max(places_probs, axis=1)  # Max probability = confidence
+            if self.use_amp:
+                with torch.cuda.amp.autocast(dtype=torch.float16):
+                    logits = self.model(batch)
+                    scene_probs = F.softmax(logits, dim=1)
+                    places_probs = torch.matmul(scene_probs, self._hierarchy_places3_gpu)
+            else:
+                logits = self.model(batch)
+                scene_probs = F.softmax(logits, dim=1)
+                places_probs = torch.matmul(scene_probs, self._hierarchy_places3_gpu)
+
+            scene_label_int = torch.argmax(places_probs, dim=1).cpu().numpy()
+            confidence = torch.max(places_probs, dim=1)[0].cpu().numpy()
         
         return scene_label_int.tolist(), confidence.tolist()
     

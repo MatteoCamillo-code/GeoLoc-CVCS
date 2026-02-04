@@ -83,7 +83,7 @@ def load_multiple_predictions(
 def get_metadata(
     project_root: Path,
     include_mp16: bool = True,
-    include_train_val: bool = True,
+    include_osv_mini: bool = True,
 ) -> pd.DataFrame:
     """
     Load prediction metadata from available CSV files.
@@ -91,19 +91,19 @@ def get_metadata(
     Args:
         project_root: Path to project root
         include_mp16: Include mp16_with_predictions.csv if available
-        include_train_val: Include train_val_with_predictions.csv if available
+        include_osv_mini: Include osv_mini_with_predictions.csv if available
         
     Returns:
         Combined DataFrame with id, latitude, longitude, predicted_label
     """
     dfs = []
     
-    if include_train_val:
-        train_val_path = project_root / "data" / "metadata" / "places-classification" / "train_val_with_predictions.csv"
-        if train_val_path.exists():
-            df = load_predictions_csv(train_val_path, image_folder="osv5m")
+    if include_osv_mini:
+        osv_mini_path = project_root / "data" / "metadata" / "places-classification" / "osv_mini_with_predictions.csv"
+        if osv_mini_path.exists():
+            df = load_predictions_csv(osv_mini_path, image_folder="osv5m")
             dfs.append(df)
-            print(f"Loaded {len(df)} records from train_val_with_predictions.csv")
+            print(f"Loaded {len(df)} records from osv_mini_with_predictions.csv")
     
     if include_mp16:
         mp16_path = project_root / "data" / "metadata" / "places-classification" / "mp16_with_predictions.csv"
@@ -115,7 +115,7 @@ def get_metadata(
     if not dfs:
         raise FileNotFoundError(
             "No prediction CSV files found. "
-            "Please ensure train_val_with_predictions.csv or mp16_with_predictions.csv exist."
+            "Please ensure osv_mini_with_predictions.csv or mp16_with_predictions.csv exist."
         )
     
     # Combine and remove duplicates
